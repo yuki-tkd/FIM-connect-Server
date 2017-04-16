@@ -2,16 +2,21 @@ import * as express from 'express';
 import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import * as path from 'path';
-import index from './routes/index';
-import login from './routes/login';
-import users from './routes/users';
 import cookieParser = require('cookie-parser'); // this module doesn't use the ES6 default export yet
+
+//Views
+import index  from './routes/index';
+import api   from './routes/api';
+import login  from './routes/login';
+import users  from './routes/users';
+import rooms  from './routes/rooms';
+import alerts from './routes/alerts';
 
 const app: express.Express = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -22,8 +27,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/api', api);
 app.use('/login', login);
 app.use('/users', users);
+app.use('/rooms', rooms);
+app.use('/alerts', alerts);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -4,7 +4,7 @@ const index: Router = Router();
 
 /* GET home page. */
 index.get('/', function(req, res, next) {
-  res.render('index', { title: 'ぶらうざーシンク！！！' });
+  res.render('index', { title: 'Floor in motion' });
 });
 
 export default index;
