@@ -29,3 +29,10 @@ nginxの設定変更
 ```
   $ sudo systemctl reload nginx
 ```
+
+## Forever
+
+Foreverのrestart
+```
+	$ forever restart /var/www/fim/out/www.js
+```

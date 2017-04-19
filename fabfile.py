@@ -18,4 +18,5 @@ def deploy():
   project_path = '/var/www/fim/'
   with cd(project_path):
     run("git pull origin master")
-    run("npm install")
+    run("source /home/yuki/.bashrc")
+    run("forever restart /var/www/fim/out/www.js")
