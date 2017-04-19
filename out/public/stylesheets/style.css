@@ -1,16 +1,12 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
 a {
   color: blue;
 }
-
-
 div.content {
-  margin: 50px;
+  padding: 50px;
 }
-
 .blocktext {
   font-family: Courier New, Courier, monospace;
 }

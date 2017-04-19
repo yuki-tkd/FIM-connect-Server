@@ -1,25 +1,8 @@
 <%- include('./_partial/header') %>
+<script type="text/javascript" src="/javascripts/alerts.js"></script>
   <div class='content'>
-    <h1><%= title %></h1>
-    <ul>
-      <li><a href="/login">login</a></li>
-      <li><a href="/rooms">rooms</a></li>
-      <li><a href="/alerts">alerts</a></li>
-    </ul>
+    <h1>Alerts</h1>
 
-    <script>
-      var ws = new WebSocket('ws://localhost:3000/',['echo-protocol','soap', 'xmpp']);
-      ws.onopen = function() {//WS接続確立
-         ws.send('hello');
-       };
-      // Log errors
-      ws.onerror = function (error) {
-        console.log('WebSocket Error ' + error);
-      };
-      // Log messages from the server
-      ws.onmessage = function (e) {
-        console.log('Server: ' + e.data);
-      };
-    </script>
+
   </div>
 <%- include('./_partial/footer') %>

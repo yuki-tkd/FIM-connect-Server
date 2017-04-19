@@ -11,7 +11,7 @@ var tsb = require('gulp-tsb');
 // compile less files from the ./styles folder
 // into css files to the ./public/stylesheets folder
 gulp.task('less', function () {
-    return gulp.src('./src/styles/**/*.less')
+    return gulp.src('./src/public/stylesheets/**/*.less')
         .pipe(less({
             paths: [path.join(__dirname, 'less', 'includes')]
         }))
@@ -68,7 +68,8 @@ gulp.task('build', function () {
 // if a file change is detected, run the TypeScript or LESS compile gulp tasks
 gulp.task('watch', function () {
     gulp.watch('src/**/*.ts', ['build']);
-    gulp.watch('src/styles/**/*.less', ['less']);
+    gulp.watch('src/public/javascripts/**/*.ts', ['build']);
+    gulp.watch('src/public/stylesheets/**/*.less', ['less']);
 }); 
 
 gulp.task('buildAll', ['build', 'less']);

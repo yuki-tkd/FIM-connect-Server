@@ -3,11 +3,14 @@ import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import cookieParser = require('cookie-parser'); // this module doesn't use the ES6 default export yet
+import passport = require('passport');
+import passportLocal = require('passport-local');
+var db = require('./db');
+
 
 //Views
 import index  from './routes/index';
 import api   from './routes/api';
-import login  from './routes/login';
 import users  from './routes/users';
 import rooms  from './routes/rooms';
 import alerts from './routes/alerts';
@@ -22,13 +25,46 @@ app.set('view engine', 'ejs');
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(require('morgan')('combined'));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new passportLocal.Strategy(
+  function(username, password, cb) {
+    db.users.findByUsername(username, function(err, user) {
+      if (err) { return cb(err); }
+      if (!user) { return cb(null, false); }
+      if (user.password != password) { return cb(null, false); }
+      return cb(null, user);
+    });
+  }));
+
+// Configure Passport authenticated session persistence.
+//
+// In order to restore authentication state across HTTP requests, Passport needs
+// to serialize users into and deserialize users out of the session.  The
+// typical implementation of this is as simple as supplying the user ID when
+// serializing, and querying the user record by ID from the database when
+// deserializing.
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  db.users.findById(id, function (err, user) {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
+
 app.use('/', index);
 app.use('/api', api);
-app.use('/login', login);
 app.use('/users', users);
 app.use('/rooms', rooms);
 app.use('/alerts', alerts);
@@ -65,6 +101,5 @@ app.use((error: any, req, res, next) => {
   });
   return null;
 });
-
 
 export default app;

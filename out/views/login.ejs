@@ -1,20 +1,20 @@
 <%- include('./_partial/header') %>
   <div class="content">
-    <div class="row">
-      <div class="input-field col s12">
-        <input id="id" type="text" class="validate">
-        <label for="id">ID</label>
-      </div>
-      <div class="input-field col s12">
-        <input id="password" type="password" class="validate">
-        <label for="password">Password</label>
-      </div>
+    <form action="/login" method="POST">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="id" name="username" type="text" class="validate">
+          <label for="id">ID</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="password" name="password" type="password" class="validate">
+          <label for="password">Password</label>
+        </div>
 
-      <div class="input-field col s12">
-        <button class="btn waves-effect waves-light" type="submit" name="action">Login
-          <i class="material-icons right">send</i>
-        </button>
+        <div class="input-field col s12">
+          <input class="btn waves-effect waves-light" type="submit" value="Login" />
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 <%- include('./_partial/footer') %>
