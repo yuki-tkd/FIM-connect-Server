@@ -1,6 +1,4 @@
 import { Router } from 'express';
-import * as passport from 'passport';
-import * as ensure from 'connect-ensure-login';
 
 import * as IncidentModel from '../model/incident';
 import * as Caratakers from '../model/caretaker';
@@ -19,7 +17,6 @@ index.get("/login", function(req, res){
 });
 
 index.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');
 });

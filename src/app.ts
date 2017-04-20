@@ -3,11 +3,6 @@ import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import * as cookieParser from 'cookie-parser'; // this module doesn't use the ES6 default export yet
-import * as passport from 'passport';
-import * as passportLocal from 'passport-local';
-var db = require('./db');
-
-import * as Carataker from './model/caretaker';
 
 //Views
 import index  from './routes/index';
@@ -33,51 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('morgan')('combined'));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.use(new passportLocal.Strategy(
-  function(username, password, cb) {
-    let caretaker = Carataker.getCaretakerByName(username).then((row) => {
-      if(!caretaker) { return cb(null, false); }
-      if(caretaker.Password != password) { return cb(null, false); }
-      if(row) { return cb(null, username); }
-    });
-  })
-);
-
-//passport.use(new passportLocal.Strategy(
-//  function(username, password, cb) {
-//    db.users.findByUsername(username, function(err, user) {
-//      if (err) { return cb(err); }
-//      if (!user) { return cb(null, false); }
-//      if (user.password != password) { return cb(null, false); }
-//      return cb(null, user);
-//    });
-//  }));
-
-
-
-// Configure Passport authenticated session persistence.
-//
-// In order to restore authentication state across HTTP requests, Passport needs
-// to serialize users into and deserialize users out of the session.  The
-// typical implementation of this is as simple as supplying the user ID when
-// serializing, and querying the user record by ID from the database when
-// deserializing.
-passport.serializeUser(function(user, cb) {
-  console.log('hogeeeeeeeeee');
-  cb(null, user.Id);
-});
-
-passport.deserializeUser(function(id, cb) {
-  console.log('piyooooooooooooooo');
-
-  Carataker.getCaretakerById(id).then( (row) => {
-    if (!row) { return cb(null); }
-    cb(null, row)
-  });
-});
 
 app.use('/', index);
 app.use('/api', api);

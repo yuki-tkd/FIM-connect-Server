@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
-var passport = require("passport");
-var ensure = require("connect-ensure-login");
 var IncidentModel = require("../model/incident");
 var Caratakers = require("../model/caretaker");
 var index = express_1.Router();
@@ -15,7 +13,7 @@ index.get('/', function (req, res, next) {
 index.get("/login", function (req, res) {
     res.render('login', {});
 });
-index.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), function (req, res) {
+index.post('/login', function (req, res) {
     res.redirect('/');
 });
 index.get('/logout', function (req, res) {
