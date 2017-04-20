@@ -1,33 +1,16 @@
 import { Router } from 'express';
-import passport = require('passport');
-import ensure = require('connect-ensure-login');
+import * as passport from 'passport';
+import * as ensure from 'connect-ensure-login';
 
-//import mongoose = require ('mongoose');
+import * as IncidentModel from '../model/incident';
+import * as Caratakers from '../model/caretaker';
 
 const index: Router = Router();
 
-//var UserSchema = new mongoose.Schema({
-//  name:  String,
-//  point: Number
-//});
-//var userModel = mongoose.model('User', UserSchema);
-
-// 使用フェーズ
-//mongoose.connect('mongodb://localhost/fim_db');
-
-
 /* GET home page. */
 index.get('/', function(req, res, next) {
-
-  //var user = new userModel();
-  //user.name  = 'KrdLab';
-  //user.point = 777;
-  //user.save(function(err) {
-  //  if (err) {
-  //    console.log(err);
-  //  }
-  //  console.log('hoge');
-  //});
+  Caratakers.getCaretakerById(1);
+  IncidentModel.getAllIncidentsByResidentId(0);
   res.render('index', { title: 'Floor in motion' });
 });
 

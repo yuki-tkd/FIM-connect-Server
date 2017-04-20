@@ -20,3 +20,12 @@ def deploy():
     run("git pull origin master")
     run("source /home/yuki/.bashrc")
     run("forever restart /var/www/fim/out/www.js")
+
+def stop():
+  hostname = run('hostname')
+  # Confirm
+  if not confirm(hostname + " <- このサーバのWebAppを停止します。よろしいですか？"):
+    abort("中止しました")
+
+  run("source /home/yuki/.bashrc")
+  run("forever stop /var/www/fim/out/www.js")

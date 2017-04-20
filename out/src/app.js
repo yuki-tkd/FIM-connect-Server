@@ -8,7 +8,6 @@ var cookieParser = require("cookie-parser"); // this module doesn't use the ES6 
 var passport = require("passport");
 var passportLocal = require("passport-local");
 var db = require('./db');
-var Carataker = require("./model/caretaker");
 //Views
 var index_1 = require("./routes/index");
 var api_1 = require("./routes/api");
@@ -31,27 +30,19 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: false, save
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new passportLocal.Strategy(function (username, password, cb) {
-    var caretaker = Carataker.getCaretakerByName(username).then(function (row) {
-        if (!caretaker) {
+    db.users.findByUsername(username, function (err, user) {
+        if (err) {
+            return cb(err);
+        }
+        if (!user) {
             return cb(null, false);
         }
-        if (caretaker.Password != password) {
+        if (user.password != password) {
             return cb(null, false);
         }
-        if (row) {
-            return cb(null, username);
-        }
+        return cb(null, user);
     });
 }));
-//passport.use(new passportLocal.Strategy(
-//  function(username, password, cb) {
-//    db.users.findByUsername(username, function(err, user) {
-//      if (err) { return cb(err); }
-//      if (!user) { return cb(null, false); }
-//      if (user.password != password) { return cb(null, false); }
-//      return cb(null, user);
-//    });
-//  }));
 // Configure Passport authenticated session persistence.
 //
 // In order to restore authentication state across HTTP requests, Passport needs
@@ -60,16 +51,14 @@ passport.use(new passportLocal.Strategy(function (username, password, cb) {
 // serializing, and querying the user record by ID from the database when
 // deserializing.
 passport.serializeUser(function (user, cb) {
-    console.log('hogeeeeeeeeee');
-    cb(null, user.Id);
+    cb(null, user.id);
 });
 passport.deserializeUser(function (id, cb) {
-    console.log('piyooooooooooooooo');
-    Carataker.getCaretakerById(id).then(function (row) {
-        if (!row) {
-            return cb(null);
+    db.users.findById(id, function (err, user) {
+        if (err) {
+            return cb(err);
         }
-        cb(null, row);
+        cb(null, user);
     });
 });
 app.use('/', index_1.default);

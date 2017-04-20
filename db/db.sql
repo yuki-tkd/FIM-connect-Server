@@ -1,7 +1,10 @@
 DROP TABLE IF EXISTS Caretaker;
 CREATE TABLE Caretaker (
   `Id`            INTEGER AUTO_INCREMENT,
-  `Name`          TEXT,
+  `UserName`      TEXT,
+  `Password`      TEXT,
+  `FirstName`     TEXT,
+  `LastName`      TEXT,
   `Updated`       TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`)
 );
@@ -11,7 +14,7 @@ CREATE TABLE Resident (
   `Id`            INTEGER AUTO_INCREMENT,
   `Name`          TEXT,
   `Sex`           ENUM('Male', 'Female'),
-  `Room`          TEXT,
+  `Room`          INTEGER,
   `SensorId`      INTEGER,
   `Updated`       TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`)

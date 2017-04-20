@@ -4,7 +4,7 @@ var express_1 = require("express");
 var passport = require("passport");
 var ensure = require("connect-ensure-login");
 var IncidentModel = require("../model/incident");
-var Caratakers = require("../model/caretaker");
+var Caratakers = require("./model/caretaker");
 var index = express_1.Router();
 /* GET home page. */
 index.get('/', function (req, res, next) {

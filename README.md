@@ -8,12 +8,20 @@
 * Module ... VelostatやLEDなどのモジュール
 
 ## Deploy
+デプロイ先サーバへのsshキーが必要
+
 ```
   $ fab deploy
 ```
-デプロイ先サーバへのsshキーが必要
 
 # 開発環境
+## ローカルサーバ
+
+```
+	$ npml gulp
+```
+
+
 ## Node.js
 * 6.10.2
 * Anyenvのndenvで設定することを推奨
@@ -23,16 +31,9 @@
 * Fabricによるデプロイを行うのでPythonが必要
 * Anyenvのpyenvにpyenv-virtualenvで入れることを推奨
 
-
 ## Nginx
-nginxの設定変更
+nginxの設定変更した場合
+
 ```
   $ sudo systemctl reload nginx
-```
-
-## Forever
-
-Foreverのrestart
-```
-	$ forever restart /var/www/fim/out/www.js
 ```

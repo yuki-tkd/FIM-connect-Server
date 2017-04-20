@@ -57,7 +57,7 @@ gulp.task('nodemon', function (cb) {
 });
 
 // TypeScript build for /src folder 
-var tsConfigSrc = tsb.create('src/tsconfig.json');
+var tsConfigSrc = tsb.create('./src/tsconfig.json');
 gulp.task('build', function () {
     return gulp.src('./src/**/*.ts')
         .pipe(tsConfigSrc()) 

@@ -1,23 +1,19 @@
 import { Router } from 'express';
+import * as IncidentModel from '../model/incident';
 
-const api: Router = Router();
+let api: Router = Router();
 
 /* GET sensor status. */
-api.get('/mat/:id', function(req, res, next) {
+api.get('/incident/:id', function(req, res, next) {
+  let rows = IncidentModel.getAllIncidentsByResidentId(0);
+
   res.send('This method returns sensor value');
 });
 
 /* Register sensor */
-api.post('/mat/:id', function(req, res, next) {
-  console.log(req.params.id);
-  console.log(req.query.hospitalName);
-  res.status(200).send();
-});
+api.post('/incident/:id', function(req, res, next) {
+  let sensorId = req.params.id;
 
-/* Update sensor status. */
-api.put('/mat/:id', function(req, res, next) {
-  console.log(req.params.id);
-  console.log(req.query.status);
   res.status(200).send();
 });
 
