@@ -18,8 +18,7 @@ def deploy():
   project_path = '/var/www/fim/'
   with cd(project_path):
     run("git pull origin master")
-    run("source /home/yuki/.bashrc")
-    run("forever restart /var/www/fim/out/www.js")
+    run("/home/yuki/.anyenv/envs/ndenv/shims/forever restart /var/www/fim/out/www.js")
 
 def stop():
   hostname = run('hostname')
