@@ -22,6 +22,7 @@ function originIsAllowed(origin) {
     console.log('requested!!!!!!');
     return true;
 }
+var clients = [];
 wsServer.on('request', function (request) {
     if (!originIsAllowed(request.origin)) {
         // Make sure we only accept requests from an allowed origin
@@ -31,6 +32,7 @@ wsServer.on('request', function (request) {
     }
     var connection = request.accept('echo-protocol', request.origin);
     console.log((new Date()) + ' Connection accepted.');
+    clients.push(connection);
     connection.on('message', function (message) {
         if (message.type === 'utf8') {
             console.log('Received Message: ' + message.utf8Data);
@@ -45,6 +47,12 @@ wsServer.on('request', function (request) {
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });
 });
+function sendAllClients() {
+    for (var c in clients) {
+        c.sendUTF("Hogeeeeeeeeeeeeeee");
+    }
+}
+exports.sendAllClients = sendAllClients;
 /**
  * Normalize a port into a number, string, or false.
  */

@@ -6,7 +6,7 @@ import * as cookieParser from 'cookie-parser'; // this module doesn't use the ES
 
 //Views
 import index  from './routes/index';
-import api   from './routes/api';
+import api    from './routes/api';
 import users  from './routes/users';
 import rooms  from './routes/rooms';
 import alerts from './routes/alerts';
@@ -16,6 +16,7 @@ const app: express.Express = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
