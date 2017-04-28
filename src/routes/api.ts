@@ -1,8 +1,20 @@
 import { Router } from 'express';
 
 import * as IncidentModel from '../model/incident';
+import * as WebSocket from '../www.ts';
 
 let api: Router = Router();
+
+/* GET sensor status. */
+api.get('/sensor/:id/:status', function(req, res, next) {
+  const id = req.params.id;
+  const status = req.params.status;
+  WebSocket.sendAllClients();
+
+  res.status(200).send();
+});
+
+
 
 /* GET sensor status. */
 api.get('/incident/:id', function(req, res, next) {
