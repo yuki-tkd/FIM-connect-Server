@@ -5,10 +5,6 @@ var logger = require("morgan");
 var bodyParser = require("body-parser");
 var path = require("path");
 var cookieParser = require("cookie-parser"); // this module doesn't use the ES6 default export yet
-var passport = require("passport");
-var passportLocal = require("passport-local");
-var db = require('./db');
-var Carataker = require("./model/caretaker");
 //Views
 var index_1 = require("./routes/index");
 var api_1 = require("./routes/api");
@@ -28,50 +24,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('morgan')('combined'));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new passportLocal.Strategy(function (username, password, cb) {
-    var caretaker = Carataker.getCaretakerByName(username).then(function (row) {
-        if (!caretaker) {
-            return cb(null, false);
-        }
-        if (caretaker.Password != password) {
-            return cb(null, false);
-        }
-        if (row) {
-            return cb(null, username);
-        }
-    });
-}));
-//passport.use(new passportLocal.Strategy(
-//  function(username, password, cb) {
-//    db.users.findByUsername(username, function(err, user) {
-//      if (err) { return cb(err); }
-//      if (!user) { return cb(null, false); }
-//      if (user.password != password) { return cb(null, false); }
-//      return cb(null, user);
-//    });
-//  }));
-// Configure Passport authenticated session persistence.
-//
-// In order to restore authentication state across HTTP requests, Passport needs
-// to serialize users into and deserialize users out of the session.  The
-// typical implementation of this is as simple as supplying the user ID when
-// serializing, and querying the user record by ID from the database when
-// deserializing.
-passport.serializeUser(function (user, cb) {
-    console.log('hogeeeeeeeeee');
-    cb(null, user.Id);
-});
-passport.deserializeUser(function (id, cb) {
-    console.log('piyooooooooooooooo');
-    Carataker.getCaretakerById(id).then(function (row) {
-        if (!row) {
-            return cb(null);
-        }
-        cb(null, row);
-    });
-});
 app.use('/', index_1.default);
 app.use('/api', api_1.default);
 app.use('/users', users_1.default);

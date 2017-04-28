@@ -1,6 +1,6 @@
 import * as DB from './db';
 
-function getCaretakerById(id) {
+function getCaretakerById(id: Number) {
   return new Promise((resolve, reject) => {
     const q = "SELECT * FROM Caretaker WHERE Id = ?";
     DB.find(q, id, (row) => {
@@ -9,7 +9,7 @@ function getCaretakerById(id) {
   });
 }
 
-function getCaretakerByName(name) {
+function getCaretakerByName(name: String) {
   return new Promise((resolve, reject) => {
   const q = "SELECT * FROM Caretaker WHERE UserName = ?";
     DB.find(q, name, (row) => {

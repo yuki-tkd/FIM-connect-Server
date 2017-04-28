@@ -5,13 +5,30 @@ var IncidentModel = require("../model/incident");
 var api = express_1.Router();
 /* GET sensor status. */
 api.get('/incident/:id', function (req, res, next) {
-    var rows = IncidentModel.getAllIncidentsByResidentId(0);
-    res.send('This method returns sensor value');
+    var residentId = req.params.id;
+    IncidentModel.getAllIncidentsByResidentId(residentId).then(function (row) {
+        if (!row) {
+            res.status(404);
+            send();
+        }
+        else {
+            res.send(row);
+        }
+    });
 });
 /* Register sensor */
-api.post('/incident/:id', function (req, res, next) {
+api.post('/incident/:id/:type', function (req, res, next) {
     var sensorId = req.params.id;
-    res.status(200).send();
+    var incidentType = req.params.type;
+    IncidentModel.addIncident(sensorId, incidentType).then(function (row) {
+        if (!row) {
+            res.status(404);
+            send();
+        }
+        else {
+            res.status(200).send('id = ' + row);
+        }
+    });
 });
 exports.default = api;
 //# sourceMappingURL=api.js.map
