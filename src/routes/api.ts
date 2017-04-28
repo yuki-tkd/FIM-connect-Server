@@ -9,7 +9,7 @@ let api: Router = Router();
 api.get('/sensor/:id/:status', function(req, res, next) {
   const id = req.params.id;
   const status = req.params.status;
-  WebSocket.sendAllClients();
+  WebSocket.sendAllClients(id, status);
 
   res.status(200).send('test');
 });

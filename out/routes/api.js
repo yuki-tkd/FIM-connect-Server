@@ -7,7 +7,7 @@ var api = express_1.Router();
 api.get('/sensor/:id/:status', function (req, res, next) {
     var id = req.params.id;
     var status = req.params.status;
-    WebSocket.sendAllClients();
+    WebSocket.sendAllClients(id, status);
     res.status(200).send('test');
 });
 /* GET sensor status. */
