@@ -17,10 +17,9 @@ index.post('/login', function (req, res) {
     res.redirect('/');
 });
 index.get('/logout', function (req, res) {
-    req.logout();
     res.redirect('/');
 });
-index.get('/profile', ensure.ensureLoggedIn(), function (req, res) {
+index.get('/profile', function (req, res) {
     res.render('rooms');
 });
 exports.default = index;

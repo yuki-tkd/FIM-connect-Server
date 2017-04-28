@@ -1,4 +1,4 @@
-var ws = new window.WebSocket('ws://133.16.123.101/', ['echo-protocol', 'soap', 'xmpp']);
+var ws = new WebSocket('ws://133.16.123.101/', ['echo-protocol', 'soap', 'xmpp']);
 ws.onopen = function () {
     ws.send('hello hoge');
 };

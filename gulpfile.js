@@ -41,7 +41,7 @@ gulp.task('nodemon', function (cb) {
 
     return nodemon({
         script: 'out/www.js',
-        watch: ['out/*.js']
+        watch: ['out/*.js', "out/**/*.*"]
     }).on('start', function () {
         if (!started) {
             cb();

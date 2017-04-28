@@ -23,12 +23,10 @@ index.post('/login',
 
 index.get('/logout',
   function(req, res) {
-    req.logout();
     res.redirect('/');
 });
 
 index.get('/profile',
-  ensure.ensureLoggedIn(),
   function(req, res) {
     res.render('rooms');
 });
