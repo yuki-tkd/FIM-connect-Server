@@ -9,5 +9,6 @@ ws.onerror = function (error) {
 // Log messages from the server
 ws.onmessage = function (e) {
     console.log('Server: ' + e.data);
+    document.getElementById('alert').innerHTML = e.data;
 };
 //# sourceMappingURL=alerts.js.map
