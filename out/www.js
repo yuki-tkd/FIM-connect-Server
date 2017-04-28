@@ -49,7 +49,12 @@ wsServer.on('request', function (request) {
 });
 function sendAllClients() {
     for (var c in clients) {
-        c.sendUTF("Hogeeeeeeeeeeeeeee");
+        try {
+            c.sendUTF("Hogeeeeeeeeeeeeeee");
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
 }
 exports.sendAllClients = sendAllClients;
