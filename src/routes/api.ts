@@ -6,12 +6,12 @@ import * as WebSocket from '../www.ts';
 let api: Router = Router();
 
 /* GET sensor status. */
-api.get('/sensor/:id/:status', function(req, res, next) {
+api.get('/sensor', function(req, res, next) {
   //const id = req.params.id;
   //const status = req.params.status;
   //WebSocket.sendAllClients();
 
-  res.status(200).send();
+  res.status(200).send('test');
 });
 
 
