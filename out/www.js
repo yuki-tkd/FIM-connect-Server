@@ -46,9 +46,9 @@ wsServer.on('request', function (request) {
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });
 });
-function sendAllClients() {
+function sendAllClients(id, status) {
     try {
-        connection.sendUTF("Hogeeeeeeeeeeeeeee");
+        connection.sendUTF("Sensor" + id + " " + status);
     }
     catch (e) {
         console.log(e);

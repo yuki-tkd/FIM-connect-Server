@@ -56,9 +56,9 @@ wsServer.on('request', function(request){
 });
 
 
-export function sendAllClients() {
+export function sendAllClients(id, status) {
   try {
-    connection.sendUTF("Hogeeeeeeeeeeeeeee");
+    connection.sendUTF("Sensor" + id + " " + status);
   } catch(e) {
     console.log(e);
   }
