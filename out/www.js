@@ -31,7 +31,7 @@ wsServer.on('request', function (request) {
         console.log((new Date()) + ' Connection from origin ' + request.origin + ' rejected.');
         return;
     }
-    var connection = request.accept('echo-protocol', request.origin);
+    var connection = request.accept('json', request.origin);
     console.log((new Date()) + ' Connection accepted.');
     clients.push(connection);
     connection.on('message', function (message) {
