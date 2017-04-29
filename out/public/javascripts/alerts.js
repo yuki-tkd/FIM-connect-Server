@@ -1,6 +1,7 @@
 var url = 'ws://' + location.host;
 console.log(url);
-var ws = new WebSocket(url, ['echo-protocol', 'soap', 'xmpp']);
+//var ws = new WebSocket(url, ['echo-protocol','soap', 'xmpp']);
+var ws = new WebSocket(url, []);
 ws.onopen = function () {
     ws.send('hello hoge');
 };

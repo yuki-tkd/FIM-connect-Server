@@ -20,6 +20,14 @@ def deploy():
     run("git pull origin master")
     run("/home/yuki/.anyenv/envs/ndenv/shims/forever restart /var/www/fim/out/www.js")
 
+def start():
+  hostname = run('hostname')
+  # Confirm
+  if not confirm(hostname + " <- このサーバのWebAppを起動します。よろしいですか？"):
+    abort("中止しました")
+
+  run("/home/yuki/.anyenv/envs/ndenv/shims/forever start /var/www/fim/out/www.js")
+
 def stop():
   hostname = run('hostname')
   # Confirm
@@ -27,4 +35,4 @@ def stop():
     abort("中止しました")
 
   run("source /home/yuki/.bashrc")
-  run("forever stop /var/www/fim/out/www.js")
+  run("/home/yuki/.anyenv/envs/ndenv/shims/forever stop /var/www/fim/out/www.js")
