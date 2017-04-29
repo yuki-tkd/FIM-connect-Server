@@ -4,23 +4,21 @@
 * Caretaker ... 介護者
 * Resident ... 入居者
 * Incident ... 転倒、動き出しなどの事象
-* Sensor ... ESPerのボード自体
+* Gateway ... ESPerのボード自体
 * Module ... VelostatやLEDなどのモジュール
-
-## Deploy
-デプロイ先サーバへのsshキーが必要
-
-```
-  $ fab deploy
-```
 
 # 開発環境
 ## ローカルサーバ
-
+gulpでtsファイルの変更をwatchしているので、開発時は立ち上げた状態にしておかないといけない。
 ```
-	$ npml gulp
+  $ npml gulp
 ```
 
+## Deploy
+デプロイ先サーバへのsshキーが必要。
+```
+  $ fab deploy
+```
 
 ## Node.js
 * 6.10.2

@@ -22,12 +22,11 @@ const wsServer = new webSocketServer({
 
 //TODO: Check the origin
 function originIsAllowed(origin) {
-    console.log('requested!!!!!!');
+    console.log(origin);
     return true;
 }
 
-
-let connection;
+let clients = [];
 
 wsServer.on('request', function(request){
     if (!originIsAllowed(request.origin)) {
@@ -37,8 +36,10 @@ wsServer.on('request', function(request){
       return;
     }
 
-    connection = request.accept('echo-protocol', request.origin);
+    let connection = request.accept('echo-protocol', request.origin);
     console.log((new Date()) + ' Connection accepted.');
+
+    clients.push(connection);
 
     connection.on('message', function(message) {
         if (message.type === 'utf8') {
@@ -55,15 +56,15 @@ wsServer.on('request', function(request){
     }); 
 });
 
-
 export function sendAllClients(id, status) {
-  try {
-    connection.sendUTF("Sensor" + id + " " + status);
-  } catch(e) {
-    console.log(e);
-  }
+  clients.forEach((con) => {
+    try {
+      con.sendUTF("Sensor " + id + " " + status);
+    } catch(e) {
+      console.log(e);
+    }
+  });
 }
-
 
 /**
  * Normalize a port into a number, string, or false.

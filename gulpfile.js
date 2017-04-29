@@ -6,7 +6,7 @@ var browserSync = require('browser-sync');
 var nodemon = require('gulp-nodemon');
 var cp = require('child_process');
 var tsb = require('gulp-tsb');
-
+var runSequence = require('run-sequence');
 
 // compile less files from the ./styles folder
 // into css files to the ./public/stylesheets folder
@@ -64,6 +64,14 @@ gulp.task('build', function () {
         .pipe(gulp.dest('./out'));
 });
 
+gulp.task('reload', function() {
+  var started = false;
+  return nodemon({
+    script: 'out/www.js',
+    watch: ['out/*.js', "out/**/*.*"]
+  });
+});
+
 // watch for any TypeScript or LESS file changes
 // if a file change is detected, run the TypeScript or LESS compile gulp tasks
 gulp.task('watch', function () {
@@ -73,4 +81,4 @@ gulp.task('watch', function () {
 }); 
 
 gulp.task('buildAll', ['build', 'less']);
-gulp.task('default', ['browser-sync']);
+gulp.task('default', ['watch','reload']);

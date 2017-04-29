@@ -19,10 +19,10 @@ var wsServer = new webSocketServer({
 });
 //TODO: Check the origin
 function originIsAllowed(origin) {
-    console.log('requested!!!!!!');
+    console.log(origin);
     return true;
 }
-var connection;
+var clients = [];
 wsServer.on('request', function (request) {
     if (!originIsAllowed(request.origin)) {
         // Make sure we only accept requests from an allowed origin
@@ -30,8 +30,9 @@ wsServer.on('request', function (request) {
         console.log((new Date()) + ' Connection from origin ' + request.origin + ' rejected.');
         return;
     }
-    connection = request.accept('echo-protocol', request.origin);
+    var connection = request.accept('echo-protocol', request.origin);
     console.log((new Date()) + ' Connection accepted.');
+    clients.push(connection);
     connection.on('message', function (message) {
         if (message.type === 'utf8') {
             console.log('Received Message: ' + message.utf8Data);
@@ -47,12 +48,14 @@ wsServer.on('request', function (request) {
     });
 });
 function sendAllClients(id, status) {
-    try {
-        connection.sendUTF("Sensor" + id + " " + status);
-    }
-    catch (e) {
-        console.log(e);
-    }
+    clients.forEach(function (con) {
+        try {
+            con.sendUTF("Sensor " + id + " " + status);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    });
 }
 exports.sendAllClients = sendAllClients;
 /**

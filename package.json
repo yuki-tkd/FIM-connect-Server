@@ -52,6 +52,7 @@
     "marked": "^0.3.6",
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
+    "run-sequence": "^1.2.2",
     "typescript": "^2.2.1"
   }
 }

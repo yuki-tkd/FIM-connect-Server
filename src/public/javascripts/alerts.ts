@@ -1,5 +1,7 @@
-var ws = new WebSocket('ws://133.16.123.101/',['echo-protocol','soap', 'xmpp']);
-ws.onopen = function() {//WS接続確立
+let url = 'ws://' + location.host;
+console.log(url);
+var ws = new WebSocket(url, ['echo-protocol','soap', 'xmpp']);
+ws.onopen = function() {
    ws.send('hello hoge');
  };
 // Log errors
