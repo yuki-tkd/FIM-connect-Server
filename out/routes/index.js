@@ -1,13 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
-var IncidentModel = require("../model/incident");
-var Caratakers = require("../model/caretaker");
 var index = express_1.Router();
 /* GET home page. */
 index.get('/', function (req, res, next) {
-    Caratakers.getCaretakerById(1);
-    IncidentModel.getAllIncidentsByResidentId(0);
     res.render('index', { title: 'Floor in motion' });
 });
 index.get("/login", function (req, res) {

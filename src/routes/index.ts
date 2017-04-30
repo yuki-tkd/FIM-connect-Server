@@ -7,8 +7,6 @@ const index: Router = Router();
 
 /* GET home page. */
 index.get('/', function(req, res, next) {
-  Caratakers.getCaretakerById(1);
-  IncidentModel.getAllIncidentsByResidentId(0);
   res.render('index', { title: 'Floor in motion' });
 });
 
