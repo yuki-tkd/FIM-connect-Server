@@ -11,18 +11,12 @@
       </thead>
 
       <tbody>
-        <tr>
-          <td>2017/4/10 10:11</td>
-          <td>Fall</td>
-        </tr>
-        <tr>
-          <td>2017/4/3 11:20</td>
-          <td>Fall</td>
-        </tr>
-        <tr>
-          <td>2017/4/1 15:30</td>
-          <td>Fall</td>
-        </tr>
+        <% incidents.forEach(function (value, key) { %>
+          <tr>
+            <td><%= value.Updated %></td>
+            <td><%= value.Type %></td>
+          </tr>
+        <% }); %>
       </tbody>
     </table>
 

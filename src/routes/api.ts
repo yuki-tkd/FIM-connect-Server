@@ -11,7 +11,14 @@ api.get('/sensor/:id/:status', function(req, res, next) {
   const status = req.params.status;
   WebSocket.sendAllClients(id, status);
 
-  res.status(200).send('test');
+  IncidentModel.addIncident(id, status).then( (row) => {
+    if(!row) { 
+      res.status(404).send();
+    }
+    else {
+      res.status(200).send('ok');
+    }
+  });
 });
 
 /* GET sensor status. */

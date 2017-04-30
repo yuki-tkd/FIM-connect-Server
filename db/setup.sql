@@ -4,8 +4,8 @@ INSERT INTO Resident (`Name`, `Sex`, `Room`) VALUES ('Ryonosuke Ono', 'Male', 10
 
 INSERT INTO Sensor (`Id`, `Type`) VALUES (1, 'Mat');
 
-INSERT INTO Incident(`ResidentId`, `Type`) VALUES (0, 'Fall');
+INSERT INTO Incident(`SensorId`, `Type`) VALUES (0, 'Fall');
 
-INSERT INTO Incident(`ResidentId`, `Type`) VALUES (0, 'Active');
+INSERT INTO Incident(`SensorId`, `Type`) VALUES (0, 'Active');
 
-INSERT INTO Incident(`ResidentId`, `Type`) VALUES (0, 'Hoge');
+INSERT INTO Incident(`SensorId`, `Type`) VALUES (0, 'Hoge');

@@ -24,7 +24,6 @@ function originIsAllowed(origin) {
 }
 var clients = [];
 wsServer.on('request', function (request) {
-    console.log(request);
     if (!originIsAllowed(request.origin)) {
         // Make sure we only accept requests from an allowed origin
         request.reject();
@@ -51,7 +50,8 @@ wsServer.on('request', function (request) {
 function sendAllClients(id, status) {
     clients.forEach(function (con) {
         try {
-            con.sendUTF("Sensor " + id + " " + status);
+            //con.sendUTF("Sensor " + id + " " + status);
+            con.sendUTF("Sensor " + status);
         }
         catch (e) {
             console.log(e);

@@ -23,7 +23,7 @@ CREATE TABLE Resident (
 DROP TABLE IF EXISTS Incident;
 CREATE TABLE Incident (
   `Id`            INTEGER AUTO_INCREMENT,
-  `ResidentId`    INTEGER,
+  `SensorId`      INTEGER,
   `Type`          TEXT,
   `Updated`       TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`)

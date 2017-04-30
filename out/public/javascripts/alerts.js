@@ -3,7 +3,7 @@ console.log(url);
 var ws = new WebSocket(url, ['echo-protocol', 'json']);
 //var ws = new WebSocket(url, []);
 ws.onopen = function () {
-    ws.send('hello hoge');
+    //ws.send('hello hoge');
 };
 // Log errors
 ws.onerror = function (error) {

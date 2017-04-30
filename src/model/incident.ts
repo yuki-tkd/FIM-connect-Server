@@ -1,5 +1,14 @@
 import * as DB from './db';
 
+function getAllIncidents() {
+  return new Promise((resolve, reject) => {
+    const q = "SELECT * FROM Incident";
+    DB.findAll(q, [], (rows) => {
+      resolve(rows)
+    });
+  });
+}
+
 function getAllIncidentsByResidentId(rid: Number) {
   return new Promise((resolve, reject) => {
     const q = "SELECT * FROM Incident WHERE ResidentId = ?";
@@ -11,7 +20,7 @@ function getAllIncidentsByResidentId(rid: Number) {
 
 function addIncident(id: Number, type: String) {
   return new Promise((resolve, reject) => {
-    let data = {id: id, type: type};
+    let data = {SensorId: id, Type: type};
     DB.insert("Incident", data, (result) => {
       console.log("Added " + result);
       resolve(result);
@@ -19,4 +28,4 @@ function addIncident(id: Number, type: String) {
   });
 }
 
-export { getAllIncidentsByResidentId, addIncident };
+export { getAllIncidents, getAllIncidentsByResidentId, addIncident };
