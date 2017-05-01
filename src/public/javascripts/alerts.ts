@@ -15,4 +15,3 @@ ws.onmessage = function (e) {
   document.getElementById('alert').innerHTML = e.data;
 };
 
-setTimeout("location.reload()", 1000);
