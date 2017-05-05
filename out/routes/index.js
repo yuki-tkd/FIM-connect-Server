@@ -4,7 +4,7 @@ var express_1 = require("express");
 var index = express_1.Router();
 /* GET home page. */
 index.get('/', function (req, res, next) {
-    res.render('index', { title: 'Floor in motion' });
+    res.render('index', { title: 'FIMconnect' });
 });
 index.get("/login", function (req, res) {
     res.render('login', {});

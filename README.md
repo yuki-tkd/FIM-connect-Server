@@ -1,12 +1,5 @@
 # README
 
-## ユビキタス言語
-* Caretaker ... 介護者
-* Resident ... 入居者
-* Incident ... 転倒、動き出しなどの事象
-* Gateway ... ESPerのボード自体
-* Module ... VelostatやLEDなどのモジュール
-
 # 開発環境
 ## ローカルサーバ
 gulpでtsファイルの変更をwatchしているので、開発時は立ち上げた状態にしておかないといけない。
