@@ -1,3 +1,5 @@
+//TODO: /api/incidentsで初期データ取ってきて、それ以降はWebSocketでデータ受信
+
 let addr = 'ws://' + location.host;
 let websocket = new WebSocket(addr, ['json']);
 let alertManager;
@@ -57,7 +59,7 @@ class Alert {
 
   setTimer(date: string): void {
     const d = new Date();
-    window.setTimeout(this.removeDOM.bind(this), 5000);
+    window.setTimeout(this.removeDOM.bind(this), 50000);
   }
 
   createDOM(): HTMLElement {

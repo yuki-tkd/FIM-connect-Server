@@ -1,24 +1,60 @@
 <%- include('./_partial/header') %>
   <div class="content">
+    <div class='row'>
+      <h3>Profile</h3>
+      <div class="col s12">
+        <div class="card horizontal">
+          <div class="card-image">
+            <img src="/images/elderly.jpg" style="border-radius: 50%" width="200px" height="200px">
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+              <table class="stripe">
+                <tbody>
+                    <tr>
+                      <td>Name</td>
+                      <td>John Doe</td>
+                    </tr>
+                    <tr>
+                      <td>Room</td>
+                      <td><%= roomNumber %></td>
+                    </tr>
+                    <tr>
+                      <td>Age</td>
+                      <td>87</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <h1>Room <%= roomNumber %></h1>
+    <div class="col s12">
+      <div class="row">
+        <h3>Incidents</h3>
+        <div class="col s12">
+          <div class="card-panel">
+            <table class="striped">
+              <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+              </thead>
 
-    <table class="stripe">
-      <thead>
-        <tr>
-            <th>Date</th>
-            <th>Status</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% incidents.forEach(function (value, key) { %>
-          <tr>
-            <td><%= value.Updated %></td>
-            <td><%= value.Type %></td>
-          </tr>
-        <% }); %>
-      </tbody>
-    </table>
-
+              <tbody>
+                <% incidents.forEach(function (value, key) { %>
+                  <tr>
+                    <td><%= value.Updated %></td>
+                    <td><%= value.Type %></td>
+                  </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>

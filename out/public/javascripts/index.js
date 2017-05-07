@@ -1,3 +1,4 @@
+//TODO: /api/incidentsで初期データ取ってきて、それ以降はWebSocketでデータ受信
 var addr = 'ws://' + location.host;
 var websocket = new WebSocket(addr, ['json']);
 var alertManager;
@@ -42,7 +43,7 @@ var Alert = (function () {
     }
     Alert.prototype.setTimer = function (date) {
         var d = new Date();
-        window.setTimeout(this.removeDOM.bind(this), 5000);
+        window.setTimeout(this.removeDOM.bind(this), 50000);
     };
     Alert.prototype.createDOM = function () {
         var alertTmpl = document.querySelector('#alert-template');

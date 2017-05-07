@@ -4,11 +4,43 @@ import * as WebSocket from '../www';
 
 let api: Router = Router();
 
-/* GET sensor status. */
-api.get('/sensor/:id/:status', function(req, res, next) {
-  const id = req.params.id;
-  WebSocket.sendAllClients(id);
+/* Update sensor status. */
+api.get('/sensor/:gatewayId/:moduleId', function(req, res, next) {
+  
+
+
+
+  let data = [{
+    id: 0,
+    roomNumber: 101,
+    name: "John doe",
+    date: "1494143497"
+  }, {
+    id: 1,
+    roomNumber: 102,
+    name: "John Maeda",
+    date: "1494143797"
+  }, {
+    id: 3,
+    roomNumber: 103,
+    name: "Test Maeda",
+    date: "1494143797"
+  }];
+  WebSocket.sendAllClients(JSON.stringify(data));
 });
+
+//TODO: 発生から5分以内のIncident一覧を返す
+api.get('/incidents', (req, res, next) => {
+  
+});
+
+
+
+
+
+
+
+
 
 /* GET sensor status. */
 api.get('/incident/:id', function(req, res, next) {

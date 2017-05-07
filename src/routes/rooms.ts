@@ -14,24 +14,16 @@ rooms.get('/', (req, res, next) => {
 
 /* GET home page. */
 rooms.get('/:roomNumber', (req, res, next) => {
-  let data = [{
-    id: 0,
-    roomNumber: 101,
-    name: "John doe",
-    date: "1494143497"
-  }, {
-    id: 1,
-    roomNumber: 102,
-    name: "John Maeda",
-    date: "1494143797"
-  }, {
-    id: 3,
-    roomNumber: 103,
-    name: "Test Maeda",
-    date: "1494143797"
-  }];
-  WebSocket.sendAllClients(JSON.stringify(data));
-  res.status(200).send();
+  res.render('room', {
+    roomNumber: req.params.roomNumber,
+    incidents: [{
+        Updated: '2017/5/10 10:30',
+        Type: 'Fall'
+      }, {
+        Updated: '2017/5/9 8:20',
+        Type: 'Fall'
+      }]
+  });
 });
 
 export default rooms;
