@@ -47,11 +47,10 @@ wsServer.on('request', function (request) {
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });
 });
-function sendAllClients(id, status) {
+function sendAllClients(data) {
     clients.forEach(function (con) {
         try {
-            //con.sendUTF("Sensor " + id + " " + status);
-            con.sendUTF("Sensor " + status);
+            con.sendUTF(data);
         }
         catch (e) {
             console.log(e);

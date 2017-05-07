@@ -56,11 +56,10 @@ wsServer.on('request', function(request){
     }); 
 });
 
-export function sendAllClients(id, status) {
+export function sendAllClients(data) {
   clients.forEach((con) => {
     try {
-      //con.sendUTF("Sensor " + id + " " + status);
-      con.sendUTF("Sensor " + status);
+      con.sendUTF(data);
     } catch(e) {
       console.log(e);
     }

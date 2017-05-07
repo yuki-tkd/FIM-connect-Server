@@ -1,22 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
-var IncidentModel = require("../model/incident");
 var WebSocket = require("../www");
 var api = express_1.Router();
 /* GET sensor status. */
 api.get('/sensor/:id/:status', function (req, res, next) {
     var id = req.params.id;
-    var status = req.params.status;
-    WebSocket.sendAllClients(id, status);
-    IncidentModel.addIncident(id, status).then(function (row) {
-        if (!row) {
-            res.status(404).send();
-        }
-        else {
-            res.status(200).send('ok');
-        }
-    });
+    WebSocket.sendAllClients(id);
 });
 /* GET sensor status. */
 api.get('/incident/:id', function (req, res, next) {

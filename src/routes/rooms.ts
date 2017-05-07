@@ -1,50 +1,37 @@
 import { Router } from 'express';
+import * as DB from '../model/db';
+import * as WebSocket from '../www';
 
-import * as IncidentModel from '../model/incident';
 const rooms: Router = Router();
 
 /* GET home page. */
-rooms.get('/', 
-  function(req, res, next) {
-  res.render('rooms', { title: 'HelloWorld' });
+rooms.get('/', (req, res, next) => {
+  DB.Room.findAll().then( (rows) => {
+    console.log(rows);
+    res.render('rooms', { title: 'HelloWorld' });
+  });
 });
 
 /* GET home page. */
-rooms.get('/:roomNumber',
-  function(req, res, next) {
-
-  IncidentModel.getAllIncidents().then( (rows) => {
-    if(!rows) {
-      res.status(404).send();
-    }
-    else {
-      rows.forEach((v, k) => {
-        v.Updated = formatDate(v.Updated, "YYYY/MM/DD hh:mm:ss");
-      });
-      res.render('room', { 
-        roomNumber: req.params.roomNumber,
-        incidents: rows
-      });
-    }
-  });
-
+rooms.get('/:roomNumber', (req, res, next) => {
+  let data = [{
+    id: 0,
+    roomNumber: 101,
+    name: "John doe",
+    date: "1494143497"
+  }, {
+    id: 1,
+    roomNumber: 102,
+    name: "John Maeda",
+    date: "1494143797"
+  }, {
+    id: 3,
+    roomNumber: 103,
+    name: "Test Maeda",
+    date: "1494143797"
+  }];
+  WebSocket.sendAllClients(JSON.stringify(data));
+  res.status(200).send();
 });
-
-function formatDate(date, format) {
-  if (!format) format = 'YYYY-MM-DD hh:mm:ss.SSS';
-  format = format.replace(/YYYY/g, date.getFullYear());
-  format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
-  format = format.replace(/DD/g, ('0' + date.getDate()).slice(-2));
-  format = format.replace(/hh/g, ('0' + date.getHours()).slice(-2));
-  format = format.replace(/mm/g, ('0' + date.getMinutes()).slice(-2));
-  format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
-  if (format.match(/S/g)) {
-    var milliSeconds = ('00' + date.getMilliseconds()).slice(-3);
-    var length = format.match(/S/g).length;
-    for (var i = 0; i < length; i++) format = format.replace(/S/, milliSeconds.substring(i, i + 1));
-  }
-  return format;
-};
-
 
 export default rooms;

@@ -1,11 +1,13 @@
-INSERT INTO Caretaker (`UserName`, `Password`) VALUES ('hoge', 'fuga');
+INSERT INTO Room (`name`, `gatewayId`) VALUES ('1-101', 11);
+INSERT INTO Room (`name`, `gatewayId`) VALUES ('1-102', 12);
+INSERT INTO Room (`name`, `gatewayId`) VALUES ('1-103', 13);
+INSERT INTO Room (`name`, `gatewayId`) VALUES ('1-104', 14);
 
-INSERT INTO Resident (`Name`, `Sex`, `Room`) VALUES ('Ryonosuke Ono', 'Male', 101);
+INSERT INTO Resident (`name`, `sex`) VALUES ('Hoge Piyo', 'Male');
+INSERT INTO Resident (`name`, `sex`) VALUES ('Hoge Fuga', 'Male');
+INSERT INTO Resident (`name`, `sex`) VALUES ('Foo bar', 'Female');
 
-INSERT INTO Sensor (`Id`, `Type`) VALUES (1, 'Mat');
-
-INSERT INTO Incident(`SensorId`, `Type`) VALUES (0, 'Fall');
-
-INSERT INTO Incident(`SensorId`, `Type`) VALUES (0, 'Active');
-
-INSERT INTO Incident(`SensorId`, `Type`) VALUES (0, 'Hoge');
+INSERT INTO Incident(`gatewayId`, `moduleId`, `status`) VALUES (11, 12, 'Fall');
+INSERT INTO Incident(`gatewayId`, `moduleId`, `status`) VALUES (12, 8, 'Fall');
+INSERT INTO Incident(`gatewayId`, `moduleId`, `status`) VALUES (13, 1, 'Fall');
+INSERT INTO Incident(`gatewayId`, `moduleId`, `status`) VALUES (14, 2, 'Fall');

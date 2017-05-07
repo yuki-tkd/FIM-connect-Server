@@ -1,31 +1,50 @@
-import * as mysql from 'mysql';
+import * as Sequelize from 'sequelize';
 
-let con = mysql.createConnection({
+let Seq = new Sequelize('tim', 'tim', 'tim', {
   host: 'localhost',
-  user: 'tim',
-  password: 'tim',
-  database: 'tim'
+  port: 3306
 });
 
-function find(query, params, cb): void {
-  con.query(query, params, function(err, rows) {
-    if (err) throw new Error();
-    else cb(rows.length < 1 ? null : rows[0]);
-    });
-}
+let Room = Seq.define('Room', {
+    id: {
+      type: Sequelize.INTEGER, 
+      primaryKey: true
+    },
+    name: Sequelize.STRING,
+    gatewayId: Sequelize.INTEGER,
+    updated: Sequelize.DATE
+}, {
+  timestamps     : false,
+  freezeTableName: true
+});
 
-function findAll(query, params, cb): void {
-  con.query(query, params, function(err, rows) {
-    if (err) throw new Error();
-    else cb(rows)
-  });
-}
+let Resident = Seq.define('Resident', {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true
+    },
+    name: Sequelize.STRING,
+    roomId: Sequelize.INTEGER,
+    sex: Sequelize.ENUM('Male', 'Female'),
+    birth: Sequelize.DATE,
+    updated: Sequelize.DATE
+}, {
+  timestamps     : false,
+  freezeTableName: true
+});
 
-function insert(table: String, data, cb): void {
-  con.query("INSERT INTO " + table + " SET ?", data, (err, result, fields) => {
-    if (err) throw new Error();
-    else cb(result.insertId);
-  });
-}
+let Incident = Seq.define('Incident', {
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true
+    },
+    gatewayId: Sequelize.INTEGER,
+    moduleId: Sequelize.INTEGER,
+    status: Sequelize.ENUM('Fall', 'Active', 'Normal'),
+    updated: Sequelize.DATE
+}, {
+  timestamps     : false,
+  freezeTableName: true
+});
 
-export { find, findAll, insert };
+export { Room, Resident, Incident };

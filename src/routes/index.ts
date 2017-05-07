@@ -1,12 +1,8 @@
 import { Router } from 'express';
-
-import * as IncidentModel from '../model/incident';
-import * as Caratakers from '../model/caretaker';
-
 const index: Router = Router();
 
 /* GET home page. */
-index.get('/', function(req, res, next) {
+index.get('/', (req, res, next) => {
   res.render('index', { title: 'FIMconnect' });
 });
 
