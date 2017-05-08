@@ -10,32 +10,29 @@ var source        = require('vinyl-source-stream');
 var nodemon       = require('gulp-nodemon');
 var path          = require('path');
 
-// compile less files from the ./styles folder
-// into css files to the ./public/stylesheets folder
 gulp.task('less', function () {
-    return gulp.src('./src/public/stylesheets/**/*.less')
+    return gulp.src('./static/src/less/**/*.less')
         .pipe(less({
             paths: [path.join(__dirname, 'less', 'includes')]
         }))
-        .pipe(gulp.dest('./out/public/stylesheets'));
+        .pipe(gulp.dest('./static/out/stylesheets'));
 });
 
-// TypeScript build for /src folder 
 var tsConfigSrc = tsb.create('./src/tsconfig.json');
 gulp.task('buildServerTs', function () {
-    return gulp.src(['./src/**/*.ts','!src/public/javascripts/*.ts', '!src/public/javascripts/**/*.ts'])
+    return gulp.src('./src/**/*.ts')
         .pipe(tsConfigSrc()) 
         .pipe(gulp.dest('./out'));
 });
 
 gulp.task('buildClientTs', function() {
   let b = browserify({
-    entries: './src/public/javascripts/fim-connect.ts'
+    entries: 'static/src/ts/fim-connect.ts'
   });
   b.plugin('tsify')
   .bundle()
   .pipe(source('fim-connect.js'))
-  .pipe(gulp.dest('./out/public/javascripts/'));
+  .pipe(gulp.dest('static/out/javascripts'));
 
   b.plugin(watchify, {
     ignoreWatch: ['**/node_modules/**']
@@ -54,9 +51,9 @@ gulp.task('nodemon', function(){
 })
 
 gulp.task('watch', function () {
-    gulp.watch(['src/*.ts', 'src/**/*.ts', '!src/public/javascripts/*.ts', '!src/public/javascripts/**/*.ts'], ['buildServerTs']);
-    gulp.watch(['src/public/javascripts/*.ts', 'src/public/javascripts/**/*.ts'], ['buildClientTs']);
-    gulp.watch('src/public/stylesheets/*.less', ['less']);
+    gulp.watch('src/**/*.ts', ['buildServerTs']);
+    gulp.watch('static/src/ts/**/*.ts', ['buildClientTs']);
+    gulp.watch('static/src/less/**/*.less', ['less']);
 }); 
 
 gulp.task('buildAll', ['buildServerTs', 'buildClientTs', 'less']);

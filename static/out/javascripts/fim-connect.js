@@ -62,7 +62,6 @@ else {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Util = require("../common/util.ts");
 function init() {
-    console.log('Index!!!!!!!');
     alertManager = new AlertManager(document.querySelector('#alert-list'));
 }
 exports.init = init;

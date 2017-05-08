@@ -4,7 +4,6 @@ import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import * as cookieParser from 'cookie-parser'; // this module doesn't use the ES6 default export yet
 
-
 //Views
 import index  from './routes/index';
 import api    from './routes/api';
@@ -15,9 +14,10 @@ import alerts from './routes/alerts';
 const app: express.Express = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
+const templatePath = path.resolve(__dirname, '../template')
+app.set('views', templatePath);
+app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -25,7 +25,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+const staticFiles = path.resolve(__dirname, '../static/out/')
+app.use(express.static(staticFiles));
+
 
 app.use(require('morgan')('combined'));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));

@@ -1,7 +1,6 @@
 import * as Util from '../common/util.ts';
 
 export function init() {
-   console.log('Index!!!!!!!');
    alertManager = new AlertManager(<HTMLElement>document.querySelector('#alert-list'));
 }
 
