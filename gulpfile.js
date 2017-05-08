@@ -1,12 +1,14 @@
-var gulp = require('gulp');
-var less = require('gulp-less');
-var path = require('path');
-var mocha = require('gulp-mocha');
-var browserSync = require('browser-sync');
-var nodemon = require('gulp-nodemon');
-var cp = require('child_process');
-var tsb = require('gulp-tsb');
-var runSequence = require('run-sequence');
+'use strict'
+var gulp          = require('gulp');
+var logger        = require('logger');
+var less          = require('gulp-less');
+var tsb           = require('gulp-tsb');
+var browserify    = require('browserify');
+var watchify      = require('watchify');
+var tsify         = require('tsify');
+var source        = require('vinyl-source-stream');
+var nodemon       = require('gulp-nodemon');
+var path          = require('path');
 
 // compile less files from the ./styles folder
 // into css files to the ./public/stylesheets folder
@@ -18,67 +20,74 @@ gulp.task('less', function () {
         .pipe(gulp.dest('./out/public/stylesheets'));
 });
 
-
-// run mocha tests in the ./tests folder
-gulp.task('test', function () {
-    return gulp.src('./tests/out/test*.js', { read: false })
-    // gulp-mocha needs filepaths so you can't have any plugins before it 
-        .pipe(mocha());
-});
-
-// run browser-sync on for client changes
-gulp.task('browser-sync', ['nodemon', 'watch'], function () {
-    browserSync.init(null, {
-        proxy: "http://localhost:3000",
-        files: ["out/**/*.*", "out/routes/**/*.*", "out/public/**/*.*", "out/views/**/*.*"],
-        port: 7000,
-    });
-});
-
-// run nodemon on server file changes
-gulp.task('nodemon', function (cb) {
-    var started = false;
-
-    return nodemon({
-        script: 'out/www.js',
-        watch: ['out/*.js', "out/**/*.*"]
-    }).on('start', function () {
-        if (!started) {
-            cb();
-            started = true;
-        }
-    }).on('restart', function onRestart() {
-        setTimeout(function reload() {
-            browserSync.reload({
-                stream: false
-            });
-        }, 500);  // browserSync reload delay
-    });
-});
-
 // TypeScript build for /src folder 
 var tsConfigSrc = tsb.create('./src/tsconfig.json');
-gulp.task('build', function () {
+gulp.task('buildServerTs', function () {
     return gulp.src('./src/**/*.ts')
         .pipe(tsConfigSrc()) 
         .pipe(gulp.dest('./out'));
 });
 
-gulp.task('reload', function() {
-  var started = false;
+gulp.task('buildClientTs', function() {
+  let b = browserify({
+    entries: './src/public/javascripts/fim-connect.ts'
+  });
+  b.plugin('tsify')
+  .bundle()
+  .pipe(source('fim-connect.js'))
+  .pipe(gulp.dest('./out/public/javascripts/'));
+
+  b.plugin(watchify, {
+    ignoreWatch: ['**/node_modules/**']
+  });
+  return b;
+});
+
+
+gulp.task('nodemon', function(){
   return nodemon({
     script: 'out/www.js',
     watch: ['out/*.js', "out/**/*.*"]
-  });
-});
+  })
+  .on('restart', function(){
+    console.log('restarted');
+  })
+})
+
+
+//gulp.task('buildClientTs', function() {
+//    let targetEntry = "src/public/javascripts/fim-connect.ts";
+//    let targetDest = "out/public/javascripts";
+//    let jsName = path.basename(targetEntry).replace(/\.ts$/, '.js');
+//    let b = browserify({
+//        entries: [ targetEntry ],
+//        plugin:  [ tsify ],
+//        cache: {}, packageCache: {} // watchify の差分ビルド利用のための引数
+//    });
+//
+//    let bundle = function() {
+//        console.log('Bundle@@@@@@@@@');
+//        return b
+//            .bundle()
+//            .on('error', (err) => { gutil.log(err.toString()); })
+//            .pipe(source(jsName))
+//            .pipe(gulp.dest(targetDest))
+//            .pipe(logger({ beforeEach: '[ts] wrote: ' }));
+//    };
+//
+//    b.plugin(watchify, { ignoreWatch: ['**/node_modules/**']});
+//    b.on('update', bundle);
+//
+//    return bundle;
+//});
 
 // watch for any TypeScript or LESS file changes
 // if a file change is detected, run the TypeScript or LESS compile gulp tasks
 gulp.task('watch', function () {
-    gulp.watch('src/**/*.ts', ['build']);
-    gulp.watch('src/public/javascripts/**/*.ts', ['build']);
-    gulp.watch('src/public/stylesheets/**/*.less', ['less']);
+    gulp.watch(['src/*.ts', 'src/**/*.ts', '!src/public/javascripts/*.ts'], ['buildServerTs']);
+    gulp.watch('src/public/javascripts/*.ts', ['buildClientTs']);
+    gulp.watch('src/public/stylesheets/*.less', ['less']);
 }); 
 
-gulp.task('buildAll', ['build', 'less']);
-gulp.task('default', ['watch','reload']);
+gulp.task('buildAll', ['buildServerTs', 'buildClientTs', 'less']);
+gulp.task('default', ['nodemon', 'watch']);

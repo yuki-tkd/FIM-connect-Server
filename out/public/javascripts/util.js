@@ -13,4 +13,3 @@ function timeConverter(UNIX_timestamp) {
     return time;
 }
 exports.timeConverter = timeConverter;
-//# sourceMappingURL=util.js.map

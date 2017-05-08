@@ -19,4 +19,3 @@ index.get('/profile', function (req, res) {
     res.render('rooms');
 });
 exports.default = index;
-//# sourceMappingURL=index.js.map

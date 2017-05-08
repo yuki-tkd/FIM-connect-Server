@@ -7,4 +7,3 @@ alerts.get('/', function (req, res, next) {
     res.render('alerts', { title: 'HelloWorld' });
 });
 exports.default = alerts;
-//# sourceMappingURL=alerts.js.map

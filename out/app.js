@@ -58,4 +58,3 @@ app.use(function (error, req, res, next) {
     return null;
 });
 exports.default = app;
-//# sourceMappingURL=app.js.map

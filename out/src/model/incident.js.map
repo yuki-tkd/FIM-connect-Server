@@ -1,1 +1,0 @@
-{"version":3,"file":"incident.js","sourceRoot":"","sources":["../../../fim/src/model/incident.ts"],"names":[],"mappings":";;AAAA,yBAA2B;AAE3B,qCAAqC,GAAG;IACtC,IAAM,CAAC,GAAG,6CAA6C,CAAC;IACxD,EAAE,CAAC,OAAO,CAAC,CAAC,EAAE,CAAC,GAAG,CAAC,EAAE,UAAS,IAAI;QAChC,OAAO,CAAC,GAAG,CAAC,IAAI,CAAC,CAAC;QAClB,MAAM,CAAC,IAAI,CAAC;IACd,CAAC,CAAC,CAAC;AACL,CAAC;AAEQ,kEAA2B"}

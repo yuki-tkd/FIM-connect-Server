@@ -1,5 +1,6 @@
 let url = 'ws://' + location.host;
 console.log(url);
+
 var ws = new WebSocket(url, ['echo-protocol','json']);
 //var ws = new WebSocket(url, []);
 ws.onopen = function() {

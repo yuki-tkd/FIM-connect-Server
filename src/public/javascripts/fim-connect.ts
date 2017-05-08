@@ -22,10 +22,12 @@ websocket.onmessage = function (e) {
   });
 };
 
+
+
 function init() {
    alertManager = new AlertManager(<HTMLElement>document.querySelector('#alert-list'));
+   console.log('init');
 }
-
 
 class AlertManager {
   alertList: HTMLElement;
