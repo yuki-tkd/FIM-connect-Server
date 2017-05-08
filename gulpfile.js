@@ -43,7 +43,6 @@ gulp.task('buildClientTs', function() {
   return b;
 });
 
-
 gulp.task('nodemon', function(){
   return nodemon({
     script: 'out/www.js',
@@ -54,38 +53,9 @@ gulp.task('nodemon', function(){
   })
 })
 
-
-//gulp.task('buildClientTs', function() {
-//    let targetEntry = "src/public/javascripts/fim-connect.ts";
-//    let targetDest = "out/public/javascripts";
-//    let jsName = path.basename(targetEntry).replace(/\.ts$/, '.js');
-//    let b = browserify({
-//        entries: [ targetEntry ],
-//        plugin:  [ tsify ],
-//        cache: {}, packageCache: {} // watchify の差分ビルド利用のための引数
-//    });
-//
-//    let bundle = function() {
-//        console.log('Bundle@@@@@@@@@');
-//        return b
-//            .bundle()
-//            .on('error', (err) => { gutil.log(err.toString()); })
-//            .pipe(source(jsName))
-//            .pipe(gulp.dest(targetDest))
-//            .pipe(logger({ beforeEach: '[ts] wrote: ' }));
-//    };
-//
-//    b.plugin(watchify, { ignoreWatch: ['**/node_modules/**']});
-//    b.on('update', bundle);
-//
-//    return bundle;
-//});
-
-// watch for any TypeScript or LESS file changes
-// if a file change is detected, run the TypeScript or LESS compile gulp tasks
 gulp.task('watch', function () {
     gulp.watch(['src/*.ts', 'src/**/*.ts', '!src/public/javascripts/*.ts'], ['buildServerTs']);
-    gulp.watch('src/public/javascripts/*.ts', ['buildClientTs']);
+    gulp.watch(['src/public/javascripts/*.ts', 'src/public/javascripts/**/*.ts'], ['buildClientTs']);
     gulp.watch('src/public/stylesheets/*.less', ['less']);
 }); 
 

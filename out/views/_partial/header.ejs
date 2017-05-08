@@ -1,7 +1,8 @@
 <!-- Default value -->
 <% if (typeof title === 'undefined') { var title = 'FIMconnect'; } %>
+<% if (typeof page_scope === 'undefined') { var page_scope = ''; } %>
 <!DOCTYPE html>
-<html>
+<html data-page-scope="<%= page_scope %>">
   <head>
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -19,4 +20,5 @@
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/javascripts/materialize.min.js"></script>
+    <script type="text/javascript" src="/javascripts/fim-connect.js"></script>
 
