@@ -7,4 +7,3 @@ users.get('/', function (req, res, next) {
     res.send('respond with a resource');
 });
 exports.default = users;
-//# sourceMappingURL=users.js.map

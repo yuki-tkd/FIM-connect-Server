@@ -13,7 +13,8 @@ var rooms_1 = require("./routes/rooms");
 var alerts_1 = require("./routes/alerts");
 var app = express();
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+var templatePath = path.resolve(__dirname, '../template');
+app.set('views', templatePath);
 app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -21,7 +22,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+var staticFiles = path.resolve(__dirname, '../static/out/');
+app.use(express.static(staticFiles));
 app.use(require('morgan')('combined'));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use('/', index_1.default);
@@ -58,4 +60,3 @@ app.use(function (error, req, res, next) {
     return null;
 });
 exports.default = app;
-//# sourceMappingURL=app.js.map

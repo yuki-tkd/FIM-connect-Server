@@ -47,4 +47,3 @@ var Incident = Seq.define('Incident', {
     freezeTableName: true
 });
 exports.Incident = Incident;
-//# sourceMappingURL=db.js.map

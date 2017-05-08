@@ -24,4 +24,3 @@ rooms.get('/:roomNumber', function (req, res, next) {
     });
 });
 exports.default = rooms;
-//# sourceMappingURL=rooms.js.map

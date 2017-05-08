@@ -48,4 +48,3 @@ api.post('/incident/:id/:type', function (req, res, next) {
     //});
 });
 exports.default = api;
-//# sourceMappingURL=api.js.map
