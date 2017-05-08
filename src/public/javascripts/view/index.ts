@@ -1,8 +1,8 @@
 import * as Util from '../common/util.ts';
 
 export function init() {
+   console.log('Index!!!!!!!');
    alertManager = new AlertManager(<HTMLElement>document.querySelector('#alert-list'));
-   console.log('init!!!!!!!!!!!');
 }
 
 //TODO: /api/incidentsで初期データ取ってきて、それ以降はWebSocketでデータ受信

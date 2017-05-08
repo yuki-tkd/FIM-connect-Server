@@ -8,8 +8,6 @@ let api: Router = Router();
 api.get('/sensor/:gatewayId/:moduleId', function(req, res, next) {
   
 
-
-
   let data = [{
     id: 0,
     roomNumber: 101,

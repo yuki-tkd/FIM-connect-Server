@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Util = require("../common/util.ts");
 function init() {
     alertManager = new AlertManager(document.querySelector('#alert-list'));
-    console.log('init!!!!!!!!!!!');
 }
 exports.init = init;
 //TODO: /api/incidentsで初期データ取ってきて、それ以降はWebSocketでデータ受信

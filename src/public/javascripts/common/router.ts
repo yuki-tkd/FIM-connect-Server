@@ -1,5 +1,4 @@
 var routes: Route[] = [];
-
 class Route {
     scope: string;
     handler: () => void;

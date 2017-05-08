@@ -5,7 +5,7 @@ var index = express_1.Router();
 /* GET home page. */
 index.get('/', function (req, res, next) {
     res.render('index', {
-        page_scope: 'index',
+        page_scope: 'Index',
         title: 'FIMconnect'
     });
 });

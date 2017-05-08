@@ -23,7 +23,7 @@ gulp.task('less', function () {
 // TypeScript build for /src folder 
 var tsConfigSrc = tsb.create('./src/tsconfig.json');
 gulp.task('buildServerTs', function () {
-    return gulp.src('./src/**/*.ts')
+    return gulp.src(['./src/**/*.ts','!src/public/javascripts/*.ts', '!src/public/javascripts/**/*.ts'])
         .pipe(tsConfigSrc()) 
         .pipe(gulp.dest('./out'));
 });
@@ -54,7 +54,7 @@ gulp.task('nodemon', function(){
 })
 
 gulp.task('watch', function () {
-    gulp.watch(['src/*.ts', 'src/**/*.ts', '!src/public/javascripts/*.ts'], ['buildServerTs']);
+    gulp.watch(['src/*.ts', 'src/**/*.ts', '!src/public/javascripts/*.ts', '!src/public/javascripts/**/*.ts'], ['buildServerTs']);
     gulp.watch(['src/public/javascripts/*.ts', 'src/public/javascripts/**/*.ts'], ['buildClientTs']);
     gulp.watch('src/public/stylesheets/*.less', ['less']);
 }); 
