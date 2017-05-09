@@ -27,12 +27,12 @@ gulp.task('buildServerTs', function () {
 
 gulp.task('buildClientTs', function() {
   let b = browserify({
-    entries: 'static/src/ts/fim-connect.ts'
+    entries: './static/src/ts/fim-connect.ts'
   });
   b.plugin('tsify')
   .bundle()
   .pipe(source('fim-connect.js'))
-  .pipe(gulp.dest('static/out/javascripts'));
+  .pipe(gulp.dest('./static/out/javascripts'));
 
   b.plugin(watchify, {
     ignoreWatch: ['**/node_modules/**']

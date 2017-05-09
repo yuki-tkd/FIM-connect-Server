@@ -38,6 +38,7 @@ class AlertManager {
   addAlert(alert: Alert): void {
     const dom = alert.createDOM();
     this.alertList.prependChild(dom);
+    console.log('hogeeeeeeeeee');
   }
 }
 
@@ -64,11 +65,14 @@ class Alert {
     const alertTmpl = <HTMLTemplateElement>document.querySelector('#alert-template');
     const clone = <HTMLElement>document.importNode(alertTmpl.content, true);
     const alert = clone.querySelector('.alert');
+    const color = clone.querySelector('.card');
     const name = clone.querySelector('h6');
     const roomNumber = clone.querySelector('.card-title');
     const update  = clone.querySelector('.update');
 
     alert.setAttribute('data-alert-id', this.id);
+    console.log(color);
+    color.className = "card blue darken-4";
     name.textContent = this.name;
     roomNumber.textContent = 'Room ' + this.roomNumber;
     update.textContent = Util.timeConverter(this.date);
