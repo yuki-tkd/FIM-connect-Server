@@ -1,13 +1,38 @@
 import { Router } from 'express';
-
 import * as WebSocket from '../www';
+import * as DB from '../model/db';
 
 let api: Router = Router();
 
 /* Update sensor status. */
-api.get('/sensor/:gatewayId/:moduleId', function(req, res, next) {
-  
+api.get('/sensor/:gatewayId/:moduleId/:status', function(req, res, next) {
+  const gatewayId = req.params.gatewayId;
+  const moduleId = req.params.moduleId;
+  const status = req.params.moduleId;
 
+  DB.Incident.create({
+    gatewayId: gatewayId,
+    moduleId: moduleId,
+    status: status
+  }).error( (err) => {
+    console.log(err);
+  }).success( (res) => {
+    console.log(res);
+  });
+
+  let data = [{
+    id: 0,
+    roomNumber: 101,
+    name: "John doe",
+    date: "1494143497"
+  }]
+  WebSocket.sendAllClients(JSON.stringify(data));
+
+  res.status(200).send(); 
+});
+
+//TODO: 発生から5分以内のIncident一覧を返す
+api.get('/incidents', (req, res, next) => {
   let data = [{
     id: 0,
     roomNumber: 101,
@@ -25,20 +50,10 @@ api.get('/sensor/:gatewayId/:moduleId', function(req, res, next) {
     date: "1494143797"
   }];
   WebSocket.sendAllClients(JSON.stringify(data));
+
+  const json = JSON.stringify(data);
+  res.status(200).send(json); 
 });
-
-//TODO: 発生から5分以内のIncident一覧を返す
-api.get('/incidents', (req, res, next) => {
-  
-});
-
-
-
-
-
-
-
-
 
 /* GET sensor status. */
 api.get('/incident/:id', function(req, res, next) {
