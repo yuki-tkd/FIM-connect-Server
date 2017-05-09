@@ -106,7 +106,7 @@ var Alert = (function () {
     }
     Alert.prototype.setTimer = function (date) {
         var d = new Date();
-        window.setTimeout(this.removeDOM.bind(this), 60000);
+        window.setTimeout(this.removeDOM.bind(this), 10000);
     };
     Alert.prototype.createDOM = function () {
         var alertTmpl = document.querySelector('#alert-template');
