@@ -5,22 +5,25 @@ var WebSocket = require("../www");
 var DB = require("../model/db");
 var api = express_1.Router();
 /* Update sensor status. */
-api.get('/sensor/:gatewayId/:moduleId/:status', function (req, res, next) {
+api.get('/sensor/:gatewayId/:moduleId/:status/:priority', function (req, res, next) {
     var gatewayId = req.params.gatewayId;
     var moduleId = req.params.moduleId;
     var status = req.params.status;
+    var priority = req.params.priority;
     DB.Incident.create({
         gatewayId: gatewayId,
         moduleId: moduleId,
-        status: status
+        status: status,
+        priority: priority
     }).then(function (r) {
         //TODO: Check status
         var data = r.dataValues;
         var dummy = [{
                 id: 0,
                 roomNumber: 101,
-                name: "John doe",
-                date: "1494143497"
+                name: "Hanako Yamada",
+                date: "1494143497",
+                priority: priority
             }];
         WebSocket.sendAllClients(JSON.stringify(dummy));
         res.status(200).send();

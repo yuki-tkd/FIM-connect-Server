@@ -5,15 +5,17 @@ import * as DB from '../model/db';
 let api: Router = Router();
 
 /* Update sensor status. */
-api.get('/sensor/:gatewayId/:moduleId/:status', function(req, res, next) {
+api.get('/sensor/:gatewayId/:moduleId/:status/:priority', function(req, res, next) {
   const gatewayId = req.params.gatewayId;
   const moduleId = req.params.moduleId;
   const status = req.params.status;
+  const priority = req.params.priority;
 
   DB.Incident.create({
     gatewayId: gatewayId,
     moduleId: moduleId,
-    status: status
+    status: status,
+    priority: priority
   }).then( (r) => {
     //TODO: Check status
     const data = r.dataValues;
@@ -21,8 +23,9 @@ api.get('/sensor/:gatewayId/:moduleId/:status', function(req, res, next) {
     const dummy = [{
       id: 0,
       roomNumber: 101,
-      name: "John doe",
-      date: "1494143497"
+      name: "Hanako Yamada",
+      date: "1494143497",
+      priority: priority
     }];
 
     WebSocket.sendAllClients(JSON.stringify(dummy));

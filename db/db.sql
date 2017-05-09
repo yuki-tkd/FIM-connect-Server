@@ -24,6 +24,7 @@ CREATE TABLE Incident (
   `gatewayId`     INTEGER,
   `moduleId`      INTEGER,
   `status`        ENUM('Fall', 'Active', 'Normal'),
+  `priority`      INTEGER,
   `updated`       TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`)
 );

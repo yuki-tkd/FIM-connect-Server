@@ -32,13 +32,12 @@ class AlertManager {
   }
 
   createAlert(val): Alert {
-    return new Alert(val.id, val.roomNumber, val.name, val.date);
+    return new Alert(val.id, val.roomNumber, val.name, val.date, val.priority);
   }
 
   addAlert(alert: Alert): void {
     const dom = alert.createDOM();
     this.alertList.prependChild(dom);
-    console.log('hogeeeeeeeeee');
   }
 }
 
@@ -47,18 +46,20 @@ class Alert {
   private roomNumber: number;
   private name: string;
   private date: string;
+  private priority: number;
 
-  constructor(id, roomNumber, name, date) {
+  constructor(id, roomNumber, name, date, priority) {
     this.id = id;
     this.roomNumber = roomNumber;
     this.name = name;
     this.date = date;
     this.setTimer(this.date);
+    this.priority = priority;
   }
 
   setTimer(date: string): void {
     const d = new Date();
-    window.setTimeout(this.removeDOM.bind(this), 50000);
+    window.setTimeout(this.removeDOM.bind(this), 60000);
   }
 
   createDOM(): HTMLElement {
@@ -71,8 +72,20 @@ class Alert {
     const update  = clone.querySelector('.update');
 
     alert.setAttribute('data-alert-id', this.id);
-    console.log(color);
-    color.className = "card blue darken-4";
+
+    if(this.priority == 1) {
+      color.className = "card red darken-4";
+    }
+    else if(this.priority == 2) {
+      color.className = "card red lighten-1";
+    }
+    else if(this.priority == 3) {
+      color.className = "card pink lighten-4";
+    }
+    else {
+      color.className = "card red darken-1";
+    }
+
     name.textContent = this.name;
     roomNumber.textContent = 'Room ' + this.roomNumber;
     update.textContent = Util.timeConverter(this.date);

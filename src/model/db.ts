@@ -44,6 +44,7 @@ let Incident = Seq.define('Incident', {
     gatewayId: Sequelize.INTEGER,
     moduleId: Sequelize.INTEGER,
     status: Sequelize.ENUM('Fall', 'Active', 'Normal'),
+    priority: Sequelize.INTEGER,
     updated: Sequelize.DATE
 }, {
   timestamps     : false,
