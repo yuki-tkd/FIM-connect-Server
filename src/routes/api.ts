@@ -8,27 +8,26 @@ let api: Router = Router();
 api.get('/sensor/:gatewayId/:moduleId/:status', function(req, res, next) {
   const gatewayId = req.params.gatewayId;
   const moduleId = req.params.moduleId;
-  const status = req.params.moduleId;
+  const status = req.params.status;
 
   DB.Incident.create({
     gatewayId: gatewayId,
     moduleId: moduleId,
     status: status
-  }).error( (err) => {
-    console.log(err);
-  }).success( (res) => {
-    console.log(res);
+  }).then( (r) => {
+    //TODO: Check status
+    const data = r.dataValues;
+
+    const dummy = [{
+      id: 0,
+      roomNumber: 101,
+      name: "John doe",
+      date: "1494143497"
+    }];
+
+    WebSocket.sendAllClients(JSON.stringify(dummy));
+    res.status(200).send(); 
   });
-
-  let data = [{
-    id: 0,
-    roomNumber: 101,
-    name: "John doe",
-    date: "1494143497"
-  }]
-  WebSocket.sendAllClients(JSON.stringify(data));
-
-  res.status(200).send(); 
 });
 
 //TODO: 発生から5分以内のIncident一覧を返す

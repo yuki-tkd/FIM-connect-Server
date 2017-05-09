@@ -8,6 +8,7 @@ var Seq = new Sequelize('tim', 'tim', 'tim', {
 var Room = Seq.define('Room', {
     id: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         primaryKey: true
     },
     name: Sequelize.STRING,
@@ -21,6 +22,7 @@ exports.Room = Room;
 var Resident = Seq.define('Resident', {
     id: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         primaryKey: true
     },
     name: Sequelize.STRING,
@@ -36,6 +38,7 @@ exports.Resident = Resident;
 var Incident = Seq.define('Incident', {
     id: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         primaryKey: true
     },
     gatewayId: Sequelize.INTEGER,
