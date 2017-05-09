@@ -80,7 +80,7 @@ class Alert {
       color.className = "card red lighten-1";
     }
     else if(this.priority == 3) {
-      color.className = "card pink lighten-4";
+      color.className = "card pink lighten-3";
     }
     else {
       color.className = "card red darken-1";
