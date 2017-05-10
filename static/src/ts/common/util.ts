@@ -11,5 +11,8 @@ function timeConverter(UNIX_timestamp){
   return time;
 }
 
+function prependChild(p: HTMLElement, c: HTMLElement) {
+  p.insertBefore(c, p.firstChild);
+}
 
-export { timeConverter };
+export { timeConverter, prependChild};

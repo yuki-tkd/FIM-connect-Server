@@ -1,4 +1,4 @@
-import * as Util from '../common/util.ts';
+import * as Util from '../common/util';
 
 export function init() {
    alertManager = new AlertManager(<HTMLElement>document.querySelector('#alert-list'));
@@ -37,7 +37,7 @@ class AlertManager {
 
   addAlert(alert: Alert): void {
     const dom = alert.createDOM();
-    this.alertList.prependChild(dom);
+    Util.prependChild(this.alertList, dom)
   }
 }
 
@@ -71,7 +71,7 @@ class Alert {
     const roomNumber = clone.querySelector('.card-title');
     const update  = clone.querySelector('.update');
 
-    alert.setAttribute('data-alert-id', this.id);
+    alert.setAttribute('data-alert-id', String(this.id));
 
     if(this.priority == 1) {
       color.className = "card red darken-4";
@@ -99,5 +99,3 @@ class Alert {
     p.removeChild(me);
   }
 }
-
-Node.prototype.prependChild = function(e){ this.insertBefore(e,this.firstChild); }

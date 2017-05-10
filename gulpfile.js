@@ -31,6 +31,7 @@ gulp.task('buildClientTs', function() {
   });
   b.plugin('tsify')
   .bundle()
+  .on('error', function (error) { console.error(error.toString()); })
   .pipe(source('fim-connect.js'))
   .pipe(gulp.dest('static/out/javascripts'));
 

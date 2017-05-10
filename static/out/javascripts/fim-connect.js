@@ -37,6 +37,10 @@ function timeConverter(UNIX_timestamp) {
     return time;
 }
 exports.timeConverter = timeConverter;
+function prependChild(p, c) {
+    p.insertBefore(c, p.firstChild);
+}
+exports.prependChild = prependChild;
 
 },{}],3:[function(require,module,exports){
 "use strict";
@@ -59,7 +63,7 @@ else {
 },{"./common/router":1,"./view/index":4}],4:[function(require,module,exports){
 "use strict";
 exports.__esModule = true;
-var Util = require("../common/util.ts");
+var Util = require("../common/util");
 function init() {
     alertManager = new AlertManager(document.querySelector('#alert-list'));
 }
@@ -91,7 +95,7 @@ var AlertManager = (function () {
     };
     AlertManager.prototype.addAlert = function (alert) {
         var dom = alert.createDOM();
-        this.alertList.prependChild(dom);
+        Util.prependChild(this.alertList, dom);
     };
     return AlertManager;
 }());
@@ -116,7 +120,7 @@ var Alert = (function () {
         var name = clone.querySelector('h6');
         var roomNumber = clone.querySelector('.card-title');
         var update = clone.querySelector('.update');
-        alert.setAttribute('data-alert-id', this.id);
+        alert.setAttribute('data-alert-id', String(this.id));
         if (this.priority == 1) {
             color.className = "card red darken-4";
         }
@@ -141,6 +145,5 @@ var Alert = (function () {
     };
     return Alert;
 }());
-Node.prototype.prependChild = function (e) { this.insertBefore(e, this.firstChild); };
 
-},{"../common/util.ts":2}]},{},[3]);
+},{"../common/util":2}]},{},[3]);
