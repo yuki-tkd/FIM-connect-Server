@@ -63,39 +63,35 @@ class Alert {
   }
 
   createDOM(): HTMLElement {
-    const alertTmpl = <HTMLTemplateElement>document.querySelector('#alert-template');
+    const alertTmpl = <HTMLTemplateElement>document.querySelector('#incident-template');
     const clone = <HTMLElement>document.importNode(alertTmpl.content, true);
-    const alert = clone.querySelector('.alert');
-    const color = clone.querySelector('.card');
-    const name = clone.querySelector('h6');
-    const roomNumber = clone.querySelector('.card-title');
-    const update  = clone.querySelector('.update');
+    const notification = clone.querySelector('.notification');
+    const incident = clone.querySelector('.incident');
+    const roomNumber = clone.querySelector('.room-number');
 
-    alert.setAttribute('data-alert-id', String(this.id));
+    notification.setAttribute('data-incident-id', String(this.id));
 
     if(this.priority == 1) {
-      color.className = "card red darken-4";
+      incident.className = "incident red darken-4";
     }
     else if(this.priority == 2) {
-      color.className = "card red lighten-1";
+      incident.className = "incident red lighten-1";
     }
     else if(this.priority == 3) {
-      color.className = "card pink lighten-3";
+      incident.className = "incident pink lighten-3";
     }
     else {
-      color.className = "card red darken-1";
+      incident.className = "incident red darken-1";
     }
 
-    name.textContent = this.name;
-    roomNumber.textContent = 'Room ' + this.roomNumber;
-    update.textContent = Util.timeConverter(this.date);
+    roomNumber.textContent = this.roomNumber;
 
     return clone;
   }
 
   removeDOM(): void {
     const p = <HTMLElement>document.querySelector('#alert-list');
-    const me = p.querySelector('[data-alert-id="' + this.id + '"]');
+    const me = p.querySelector('[data-incident-id="' + this.id + '"]');
     p.removeChild(me);
   }
 }
