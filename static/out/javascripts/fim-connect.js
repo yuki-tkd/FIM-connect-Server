@@ -65,27 +65,25 @@ else {
 exports.__esModule = true;
 var Util = require("../common/util");
 function init() {
-    alertManager = new AlertManager(document.querySelector('#alert-list'));
+    var alertManager = new AlertManager(document.querySelector('#alert-list'));
+    var addr = 'ws://' + location.host;
+    var websocket = new WebSocket(addr, ['json']);
+    websocket.onopen = function () {
+    };
+    // Log errors
+    websocket.onerror = function (error) {
+        console.log('WebSocket Error ' + error);
+    };
+    // Log messages from the server
+    websocket.onmessage = function (e) {
+        var data = JSON.parse(e.data);
+        data.forEach(function (val, index, arr) {
+            var alert = alertManager.createAlert(val);
+            alertManager.addAlert(alert);
+        });
+    };
 }
 exports.init = init;
-//TODO: /api/incidentsで初期データ取ってきて、それ以降はWebSocketでデータ受信
-var addr = 'ws://' + location.host;
-var websocket = new WebSocket(addr, ['json']);
-var alertManager;
-websocket.onopen = function () {
-};
-// Log errors
-websocket.onerror = function (error) {
-    console.log('WebSocket Error ' + error);
-};
-// Log messages from the server
-websocket.onmessage = function (e) {
-    var data = JSON.parse(e.data);
-    data.forEach(function (val, index, arr) {
-        var alert = alertManager.createAlert(val);
-        alertManager.addAlert(alert);
-    });
-};
 var AlertManager = (function () {
     function AlertManager(alertList) {
         this.alertList = alertList;
@@ -96,6 +94,19 @@ var AlertManager = (function () {
     AlertManager.prototype.addAlert = function (alert) {
         var dom = alert.createDOM();
         Util.prependChild(this.alertList, dom);
+    };
+    AlertManager.prototype.updateOrCreate = function (alert) {
+        var target;
+        alerts.forEach(function (val) {
+            if (val.id == alert.id) {
+                target = alert;
+                updateDOM(alert);
+            }
+        });
+        if (target == null) {
+        }
+    };
+    AlertManager.prototype.create = function (alert) {
     };
     return AlertManager;
 }());
@@ -110,15 +121,40 @@ var Alert = (function () {
     }
     Alert.prototype.setTimer = function (date) {
         var d = new Date();
-        window.setTimeout(this.removeDOM.bind(this), 10000);
+        this.timer = window.setTimeout(this.removeDOM.bind(this), 10000);
+    };
+    Alert.prototype.clearTimer = function () {
+        clearTimeout(this.timer);
     };
     Alert.prototype.createDOM = function () {
         var alertTmpl = document.querySelector('#incident-template');
         var clone = document.importNode(alertTmpl.content, true);
-        var notification = clone.querySelector('.notification');
+        var alert = clone.querySelector('.alert');
         var incident = clone.querySelector('.incident');
         var roomNumber = clone.querySelector('.room-number');
-        notification.setAttribute('data-incident-id', String(this.id));
+        alert.setAttribute('data-incident-id', String(this.id));
+        if (this.priority == 1) {
+            incident.className = "incident red darken-4";
+        }
+        else if (this.priority == 2) {
+            incident.className = "incident red lighten-1";
+        }
+        else if (this.priority == 3) {
+            incident.className = "incident pink lighten-3";
+        }
+        else {
+            incident.className = "incident red darken-1";
+        }
+        roomNumber.textContent = this.roomNumber;
+        return clone;
+    };
+    Alert.prototype.updateDOM = function () {
+        var p = document.querySelector('#alert-list');
+        var clone = p.querySelector('[data-incident-id="' + alert.id + '"]');
+        var alert = clone.querySelector('.alert');
+        var incident = clone.querySelector('.incident');
+        var roomNumber = clone.querySelector('.room-number');
+        alert.setAttribute('data-incident-id', String(this.id));
         if (this.priority == 1) {
             incident.className = "incident red darken-4";
         }
