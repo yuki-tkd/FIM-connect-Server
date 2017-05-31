@@ -37,7 +37,12 @@ class AlertManager {
 
   addAlert(alert: Alert): void {
     const dom = alert.createDOM();
-    Util.prependChild(this.alertList, dom)
+    Util.prependChild(this.alertList, dom);
+  }
+
+  updateOrCreateAlert(alert: Alert): void {
+    const p = <HTMLElement>document.querySelector('#alert-list');
+    const me = p.querySelector('[data-incident-id="' + this.id + '"]');
   }
 }
 
@@ -47,6 +52,7 @@ class Alert {
   private name: string;
   private date: string;
   private priority: number;
+  private timer;
 
   constructor(id, roomNumber, name, date, priority) {
     this.id = id;
@@ -59,7 +65,11 @@ class Alert {
 
   setTimer(date: string): void {
     const d = new Date();
-    window.setTimeout(this.removeDOM.bind(this), 10000);
+    this.timer = window.setTimeout(this.removeDOM.bind(this), 10000);
+  }
+
+  clearTimer(): void {
+    clearTimeout(this.timer);
   }
 
   createDOM(): HTMLElement {
