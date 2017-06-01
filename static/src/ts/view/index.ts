@@ -1,4 +1,5 @@
 import * as Util from '../common/util';
+import * as _ from 'lodash'
 
 export function init() {
   let alertManager = new AlertManager(<HTMLElement>document.querySelector('#alert-list'));
@@ -16,53 +17,53 @@ export function init() {
   // Log messages from the server
   websocket.onmessage = function (e) {
     let data = JSON.parse(e.data);
-    data.forEach( (val, index, arr) => {
-      let alert = alertManager.createAlert(val);
-      alertManager.addAlert(alert);
+    data.forEach( (val) => {
+      alertManager.update(val);
     });
   };
 
 }
 
-
 class AlertManager {
   alertList: HTMLElement;
-
-  alerts: HTMLElement[];
+  alertViews;
 
   constructor(alertList: HTMLElement) {
     this.alertList = alertList;
+    this.alertViews = {};
   }
 
-  createAlert(val): Alert {
-    return new Alert(val.id, val.roomNumber, val.name, val.date, val.priority);
-  }
-
-  addAlert(alert: Alert): void {
-    const dom = alert.createDOM();
-    Util.prependChild(this.alertList, dom);
-  }
-
-  updateOrCreate(alert: Alert): void {
-    let target;
-    alerts.forEach( (val) => {
-      if(val.id == alert.id) {
-        target = alert;
-        updateDOM(alert);
-      }
-    });
-    if(target == null) {
-      
+  update(alert): void {
+    const id = alert.id;
+    if(id in this.alertViews) {
+      this.updateAlert(alert);
+    } else {
+      this.alertViews[id] = this.createAlert(alert);
     }
   }
 
-  private create(alert: Alert) {
-    
+  createAlert(val): AlertView {
+    const view = new AlertView(val.id, val.roomNumber, val.name, val.date, val.priority);
+    view.create(this.alertList);
+    view.setTimer(_.partial(this.timeout, val).bind(this), 5000)
+    return view;
   }
 
+  updateAlert(val): void {
+    const view = this.alertViews[val.id];
+    view.resetTimer(_.partial(this.timeout, val).bind(this), 5000)
+    view.update(val);
+  }
+
+  timeout(val): void {
+    const view = this.alertViews[val.id];
+    view.remove(this.alertList);
+    delete this.alertViews[val.id];
+  }
 }
 
-class Alert {
+class AlertView {
+  private view: HTMLElement;
   private id: number;
   private roomNumber: number;
   private name: string;
@@ -75,27 +76,26 @@ class Alert {
     this.roomNumber = roomNumber;
     this.name = name;
     this.date = date;
-    this.setTimer(this.date);
     this.priority = priority;
   }
 
-  setTimer(date: string): void {
-    const d = new Date();
-    this.timer = window.setTimeout(this.removeDOM.bind(this), 10000);
+  setTimer(func, time): void {
+    this.timer = window.setTimeout(func, time);
   }
 
-  clearTimer(): void {
-    clearTimeout(this.timer);
+  resetTimer(func, time): void {
+    window.clearTimeout(this.timer);
+    this.setTimer(func, time);
   }
 
-  createDOM(): HTMLElement {
-    const alertTmpl = <HTMLTemplateElement>document.querySelector('#incident-template');
+  create(p: HTMLElement): void {
+    const alertTmpl = <HTMLTemplateElement>document.querySelector('#alert-template');
     const clone = <HTMLElement>document.importNode(alertTmpl.content, true);
     const alert = clone.querySelector('.alert');
     const incident = clone.querySelector('.incident');
     const roomNumber = clone.querySelector('.room-number');
 
-    alert.setAttribute('data-incident-id', String(this.id));
+    alert.setAttribute('data-room-number', String(this.roomNumber));
 
     if(this.priority == 1) {
       incident.className = "incident red darken-4";
@@ -110,42 +110,31 @@ class Alert {
       incident.className = "incident red darken-1";
     }
 
-    roomNumber.textContent = this.roomNumber;
-
-    return clone;
+    roomNumber.textContent = String(this.roomNumber);
+    Util.prependChild(p, clone);
+    this.view = <HTMLElement>p.querySelector('[data-room-number="' + this.roomNumber + '"]');
   }
 
-  updateDOM(): HTMLElement {
-    const p = <HTMLElement>document.querySelector('#alert-list');
-    const clone = p.querySelector('[data-incident-id="' + alert.id + '"]');
-    const alert = clone.querySelector('.alert');
-    const incident = clone.querySelector('.incident');
-    const roomNumber = clone.querySelector('.room-number');
+  update(val): void {
+    const incident = this.view.querySelector('.incident');
+    const roomNumber = this.view.querySelector('.room-number');
 
-    alert.setAttribute('data-incident-id', String(this.id));
-
-    if(this.priority == 1) {
+    if(val.priority == 1) {
       incident.className = "incident red darken-4";
     }
-    else if(this.priority == 2) {
+    else if(val.priority == 2) {
       incident.className = "incident red lighten-1";
     }
-    else if(this.priority == 3) {
+    else if(val.priority == 3) {
       incident.className = "incident pink lighten-3";
     }
     else {
       incident.className = "incident red darken-1";
     }
-
-    roomNumber.textContent = this.roomNumber;
-
-    return clone;
-   
+    roomNumber.textContent = String(val.roomNumber);
   }
 
-  removeDOM(): void {
-    const p = <HTMLElement>document.querySelector('#alert-list');
-    const me = p.querySelector('[data-incident-id="' + this.id + '"]');
-    p.removeChild(me);
+  remove(p: HTMLElement): void {
+    p.removeChild(this.view);
   }
 }
