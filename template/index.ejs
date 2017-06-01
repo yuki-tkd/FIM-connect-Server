@@ -1,6 +1,7 @@
 <%- include('./_partial/header') %>
-  <template id="incident-template">
-    <div class="notification col s4">
+  <!-- Template for an alert -->
+  <template id="alert-template">
+    <div class="alert col s4">
       <div class="incident red darken-4">
         <img src="/images/movement.png" width="48px" height="48px" />
         <span class="room-number">101</span>
@@ -9,9 +10,9 @@
   </template>
 
   <template id="event-template">
-    <div class="col s12 event">
+    <div class="event col s12 event">
       <img src="/images/movement.png" width="48px" height="48px" />
-      <span>101</span>
+      <span class="event-title">101</span>
     </div>
   </template>
 
