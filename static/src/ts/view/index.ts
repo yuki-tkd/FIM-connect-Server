@@ -45,13 +45,13 @@ class AlertManager {
   createAlert(val): AlertView {
     const view = new AlertView(val.id, val.roomNumber, val.name, val.date, val.priority);
     view.create(this.alertList);
-    view.setTimer(_.partial(this.timeout, val).bind(this), 5000)
+    view.setTimer(_.partial(this.timeout, val).bind(this), 10000)
     return view;
   }
 
   updateAlert(val): void {
     const view = this.alertViews[val.id];
-    view.resetTimer(_.partial(this.timeout, val).bind(this), 5000)
+    view.resetTimer(_.partial(this.timeout, val).bind(this), 10000)
     view.update(val);
   }
 
