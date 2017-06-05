@@ -14,21 +14,21 @@ rooms.get('/', function (req, res, next) {
     });
 });
 rooms.get('/:roomNumber', function (req, res, next) {
-    var roomNumber = req.query.roomNumber;
-    DB.Room.findOne({ where: { id: id } }).then(function (row) {
-        if (!row) {
-            res.status(404).send();
-        }
-        res.render('room', {
-            roomNumber: roomNumber,
-            incidents: [{
-                    Updated: '2017/5/10 10:30',
-                    Type: 'Fall'
-                }, {
-                    Updated: '2017/5/9 8:20',
-                    Type: 'Fall'
-                }]
-        });
-    });
+    //const roomNumber = req.query.roomNumber;
+    //DB.Room.findOne({where: { id: id}, ).then( (row) => {
+    //  if(!row) {
+    //    res.status(404).send();
+    //  }
+    //  res.render('room', {
+    //    roomNumber: roomNumber,
+    //    incidents: [{
+    //        Updated: '2017/5/10 10:30',
+    //        Type: 'Fall'
+    //      }, {
+    //        Updated: '2017/5/9 8:20',
+    //        Type: 'Fall'
+    //      }]
+    //  });
+    //});
 });
 exports.default = rooms;

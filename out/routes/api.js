@@ -10,7 +10,10 @@ api.get('/sensor/:room_number/:status/:priority', function (req, res, next) {
     var priority = req.params.priority;
     var room_data = {
         101: "Hanako Yamada",
-        102: "Sachiko Takada"
+        102: "Sachiko Takada",
+        103: "Shinpei Serizawa",
+        104: "Kou Mike",
+        201: "Hiro Tanaka"
     };
     var data = [{
             id: room_number,

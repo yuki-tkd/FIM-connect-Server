@@ -11,7 +11,10 @@ api.get('/sensor/:room_number/:status/:priority', (req, res, next) => {
 
   const room_data = {
     101: "Hanako Yamada",
-    102: "Sachiko Takada"
+    102: "Sachiko Takada",
+    103: "Shinpei Serizawa",
+    104: "Kou Mike",
+    201: "Hiro Tanaka"
   };
 
   const data = [{
@@ -22,6 +25,8 @@ api.get('/sensor/:room_number/:status/:priority', (req, res, next) => {
     priority: priority,
     status: status
   }];
+
+
 
   WebSocket.sendAllClients(JSON.stringify(data));
   res.status(200).send();
