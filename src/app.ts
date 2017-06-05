@@ -7,14 +7,10 @@ import * as cookieParser from 'cookie-parser'; // this module doesn't use the ES
 //Views
 import index  from './routes/index';
 import api    from './routes/api';
-import users  from './routes/users';
-import rooms  from './routes/rooms';
-import alerts from './routes/alerts';
 
 const app: express.Express = express();
 
 // view engine setup
-
 const templatePath = path.resolve(__dirname, '../template')
 app.set('views', templatePath);
 app.set('view engine', 'ejs');
@@ -29,16 +25,12 @@ app.use(cookieParser());
 const staticFiles = path.resolve(__dirname, '../static/out/')
 app.use(express.static(staticFiles));
 
-
 app.use(require('morgan')('combined'));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 
 
 app.use('/', index);
 app.use('/api', api);
-app.use('/users', users);
-app.use('/rooms', rooms);
-app.use('/alerts', alerts);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -52,7 +44,6 @@ app.use((req, res, next) => {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-
   app.use((error: any, req, res, next) => {
     res.status(error['status'] || 500);
     res.render('error', {

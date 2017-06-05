@@ -1,0 +1,111 @@
+<%- include('./_partial/header') %>
+  <!-- Template for an alert -->
+  <template id="alert-template">
+    <div class="alert col s4">
+      <div class="incident red darken-4">
+        <img src="/images/movement.png" width="48px" height="48px" />
+        <span class="room-number">101</span>
+      </div>
+    </div>
+  </template>
+
+  <template id="event-template">
+    <div class="event col s12 event">
+      <img src="/images/movement.png" width="48px" height="48px" />
+      <span class="event-title">101</span>
+    </div>
+  </template>
+
+    <div class="row main">
+      <div class="col s12 m8 full">
+        <div class="activities">
+          <!-- Alerts will be added -->
+          <div id="alert-list" class="row">
+
+            <div class="alert col s4">
+              <div class="incident grey lighten-1">
+                <img src="/images/shower.png" width="48px" height="48px" />
+                <span class="room-number">125</span>
+              </div>
+            </div>
+
+            <div class="alert col s4">
+              <div class="incident grey lighten-1">
+                <img src="/images/bed.png" width="48px" height="48px" />
+                <span class="room-number">108</span>
+              </div>
+            </div>
+
+            <div class="alert col s4">
+              <div class="incident grey lighten-1">
+                <img src="/images/shower.png" width="48px" height="48px" />
+                <span class="room-number">112</span>
+              </div>
+            </div>
+
+            <div class="alert col s4">
+              <div class="incident grey lighten-1">
+                <img src="/images/bed.png" width="48px" height="48px" />
+                <span class="room-number">125</span>
+              </div>
+            </div>
+
+            <div class="alert col s4">
+              <div class="incident grey lighten-1">
+                <img src="/images/shower.png" width="48px" height="48px" />
+                <span class="room-number">132</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col s12 m4 full">
+        <div class="events">
+          <!-- Events will be added -->
+          <div id="event-list" class="row">
+            <div class="alert col s12">
+              <div class="event row">
+                <div class="event_icon blue darken-4 col s4">
+                  <img src="/images/shower.png" width="80px" height="80px" />
+                </div>
+                <div class="event_text grey lighten-1 col s8">
+                  <p>5 Times: Restroom</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="alert col s12">
+              <div class="event row">
+                <div class="event_icon blue darken-4 col s4">
+                  <img src="/images/bed.png" width="80px" height="80px" />
+                </div>
+                <div class="event_text grey lighten-1 col s8">
+                  <p>30 mins: Walking</p>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="alert col s12">
+              <div class="event row">
+                <div class="event_icon blue darken-4 col s4">
+                  <img src="/images/shower.png" width="80px" height="80px" />
+                </div>
+                <div class="event_text grey lighten-1 col s8">
+                  <p>30 mins: In the restroom</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div> <!-- wrapper -->
+  </body>
+</html>

@@ -17135,7 +17135,9 @@ exports.prependChild = prependChild;
 exports.__esModule = true;
 var Router = require("./common/router");
 var Index = require("./view/index");
+var Random = require("./view/random");
 Router.connect('Index', Index.init);
+Router.connect('Random', Random.init);
 function dispatch() {
     var html = document.documentElement;
     var scope = html.getAttribute('data-page-scope');
@@ -17148,7 +17150,7 @@ else {
     dispatch();
 }
 
-},{"./common/router":2,"./view/index":5}],5:[function(require,module,exports){
+},{"./common/router":2,"./view/index":5,"./view/random":6}],5:[function(require,module,exports){
 "use strict";
 exports.__esModule = true;
 var Util = require("../common/util");
@@ -17258,6 +17260,111 @@ var AlertView = (function () {
             incident.className = "incident red darken-1";
         }
         roomNumber.textContent = String(val.roomNumber);
+    };
+    AlertView.prototype.remove = function (p) {
+        p.removeChild(this.view);
+    };
+    return AlertView;
+}());
+
+},{"../common/util":3,"lodash":1}],6:[function(require,module,exports){
+"use strict";
+exports.__esModule = true;
+var Util = require("../common/util");
+var _ = require("lodash");
+function init() {
+    var alertManager = new AlertManager(document.querySelector('#alert-list'));
+    var alertWebSocket = new WebSocket('ws://' + location.host, ['json']);
+    alertWebSocket.onopen = function () {
+    };
+    // Log errors
+    alertWebSocket.onerror = function (error) {
+        console.log('WebSocket Error ' + error);
+    };
+    // Log messages from the server
+    alertWebSocket.onmessage = function (e) {
+        console.log(e.data);
+        var data = JSON.parse(e.data);
+        data.forEach(function (alert) {
+            alertManager.update(alert);
+        });
+    };
+}
+exports.init = init;
+var AlertManager = (function () {
+    function AlertManager(alertList) {
+        this.displayTime = 30 * 1000;
+        this.list = alertList;
+        this.alertViews = {};
+    }
+    AlertManager.prototype.update = function (alert) {
+        var id = alert.id;
+        if (id in this.alertViews) {
+            this.updateAlert(alert);
+        }
+        else {
+            this.alertViews[id] = this.createAlert(alert);
+        }
+    };
+    AlertManager.prototype.createAlert = function (alert) {
+        var view = new AlertView(this.list, alert);
+        view.setTimer(_.partial(this.clearAlert, alert).bind(this), this.displayTime);
+        return view;
+    };
+    AlertManager.prototype.updateAlert = function (alert) {
+        var view = this.alertViews[alert.id];
+        view.resetTimer(_.partial(this.clearAlert, alert).bind(this), this.displayTime);
+        view.update(alert);
+    };
+    AlertManager.prototype.clearAlert = function (alert) {
+        var view = this.alertViews[alert.id];
+        view.remove(this.list);
+        delete this.alertViews[alert.id];
+    };
+    return AlertManager;
+}());
+var AlertView = (function () {
+    function AlertView(p, alert) {
+        this.id = alert.id;
+        this.create(p, alert);
+    }
+    AlertView.prototype.setTimer = function (func, time) {
+        this.timer = window.setTimeout(func, time);
+    };
+    AlertView.prototype.resetTimer = function (func, time) {
+        window.clearTimeout(this.timer);
+        this.setTimer(func, time);
+    };
+    AlertView.prototype.create = function (p, alert) {
+        var alertTmpl = document.querySelector('#alert-template');
+        var clone = document.importNode(alertTmpl.content, true);
+        var d = clone.querySelector('.alert');
+        d.setAttribute('data-alert-id', String(alert.id));
+        d.setAttribute('data-room-number', String(alert.room_number));
+        var i = clone.querySelector('.incident');
+        i.setAttribute('data-status', String(alert.status));
+        Util.prependChild(p, clone);
+        this.view = p.querySelector('[data-alert-id="' + alert.id + '"]');
+        this.update(alert);
+    };
+    AlertView.prototype.update = function (alert) {
+        var incident = this.view.querySelector('.incident');
+        var status = incident.getAttribute('data-status');
+        var roomNumber = this.view.querySelector('.room-number');
+        console.log(status);
+        if (alert.priority == '1') {
+            incident.className = "incident red darken-4";
+        }
+        else if (alert.priority == '2') {
+            incident.className = "incident red lighten-1";
+        }
+        else if (alert.priority == '3') {
+            incident.className = "incident pink lighten-3";
+        }
+        else {
+            incident.className = "incident red darken-1";
+        }
+        roomNumber.textContent = String(alert.room_number);
     };
     AlertView.prototype.remove = function (p) {
         p.removeChild(this.view);
