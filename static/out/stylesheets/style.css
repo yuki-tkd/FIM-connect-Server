@@ -26,35 +26,40 @@ div.activities {
   background-color: #ffffff;
   margin: 5px;
   height: 100%;
+  padding: 20px 0;
 }
 div.events {
   background-color: #ffffff;
   margin: 5px 5px 5px 0;
   height: 100%;
+  padding-top: 20px;
 }
 div.incident {
-  background-color: #dedfe1;
-  height: 120px;
-  margin: 20px 10px;
+  height: 80px;
+  margin: 5px 0 0 0;
   display: flex;
   align-items: center;
 }
 div.incident span {
   margin-left: 10px;
-  font-size: 64px;
+  font-size: 58px;
   font-weight: bold;
 }
 div.event {
-  background-color: #dedfe1;
-  height: 120px;
-  margin: 20px 10px;
+  height: 80px;
+  margin: 5px 0 0 0;
   display: flex;
   align-items: center;
 }
-div.event span {
-  margin-left: 10px;
-  font-size: 64px;
-  font-weight: bold;
+div.event_text {
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+div.event_icon {
+  height: 80px;
+  display: flex;
+  align-items: center;
 }
 .blocktext {
   font-family: Courier New, Courier, monospace;

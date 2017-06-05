@@ -8,9 +8,6 @@ var cookieParser = require("cookie-parser"); // this module doesn't use the ES6 
 //Views
 var index_1 = require("./routes/index");
 var api_1 = require("./routes/api");
-var users_1 = require("./routes/users");
-var rooms_1 = require("./routes/rooms");
-var alerts_1 = require("./routes/alerts");
 var app = express();
 // view engine setup
 var templatePath = path.resolve(__dirname, '../template');
@@ -28,9 +25,6 @@ app.use(require('morgan')('combined'));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use('/', index_1.default);
 app.use('/api', api_1.default);
-app.use('/users', users_1.default);
-app.use('/rooms', rooms_1.default);
-app.use('/alerts', alerts_1.default);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

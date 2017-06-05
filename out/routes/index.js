@@ -9,4 +9,10 @@ index.get('/', function (req, res, next) {
         title: 'FIMconnect'
     });
 });
+index.get('/demo', function (req, res, next) {
+    res.render('random', {
+        page_scope: 'Random',
+        title: 'FIMconnect'
+    });
+});
 exports.default = index;

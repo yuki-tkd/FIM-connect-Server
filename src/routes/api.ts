@@ -4,6 +4,31 @@ import * as DB from '../model/db';
 
 let api: Router = Router();
 
+api.get('/sensor/:room_number/:status/:priority', (req, res, next) => {
+  const room_number = Number(req.params.room_number);
+  const status = req.params.status;
+  const priority = req.params.priority;
+
+  const room_data = {
+    101: "Hanako Yamada",
+    102: "Sachiko Takada"
+  };
+
+  const data = [{
+    id: room_number,
+    room_number: room_number,
+    name: room_data[room_number],
+    date: "1494143497",
+    priority: priority,
+    status: status
+  }];
+
+  WebSocket.sendAllClients(JSON.stringify(data));
+  res.status(200).send();
+});
+
+
+
 /* Update sensor status. */
 api.get('/sensor/:gatewayId/:moduleId/:status/:priority', function(req, res, next) {
   const gatewayId = req.params.gatewayId;

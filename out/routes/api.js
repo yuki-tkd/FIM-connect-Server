@@ -4,6 +4,25 @@ var express_1 = require("express");
 var WebSocket = require("../www");
 var DB = require("../model/db");
 var api = express_1.Router();
+api.get('/sensor/:room_number/:status/:priority', function (req, res, next) {
+    var room_number = Number(req.params.room_number);
+    var status = req.params.status;
+    var priority = req.params.priority;
+    var room_data = {
+        101: "Hanako Yamada",
+        102: "Sachiko Takada"
+    };
+    var data = [{
+            id: room_number,
+            room_number: room_number,
+            name: room_data[room_number],
+            date: "1494143497",
+            priority: priority,
+            status: status
+        }];
+    WebSocket.sendAllClients(JSON.stringify(data));
+    res.status(200).send();
+});
 /* Update sensor status. */
 api.get('/sensor/:gatewayId/:moduleId/:status/:priority', function (req, res, next) {
     var gatewayId = req.params.gatewayId;
