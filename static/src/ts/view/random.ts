@@ -4,7 +4,15 @@ import * as _ from 'lodash'
 export function init() {
   let alertManager = new AlertManager(<HTMLElement>document.querySelector('#alert-list'));
   let alertWebSocket = new WebSocket('ws://' + location.host, ['json']);
-  
+
+  let timer = window.setInterval(cb, 500);
+  function cb() {
+    let d = new Date();
+    let clock = <HTMLElement>document.querySelector('.clock');
+    clock.innerHTML = d.getHours() + ":" + d.getMinutes();
+  }
+
+
   alertWebSocket.onopen = function() {
 
   };

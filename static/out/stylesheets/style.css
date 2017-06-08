@@ -67,6 +67,12 @@ div.event_icon {
 span.card-title {
   font-weight: bold !important;
 }
+.clock {
+  margin-right: 30px;
+}
+.clock li {
+  font-size: 20px;
+}
 .tarkett-blue {
   background-color: #242c38 !important;
 }

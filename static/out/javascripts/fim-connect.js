@@ -17275,6 +17275,12 @@ var _ = require("lodash");
 function init() {
     var alertManager = new AlertManager(document.querySelector('#alert-list'));
     var alertWebSocket = new WebSocket('ws://' + location.host, ['json']);
+    var timer = window.setInterval(cb, 500);
+    function cb() {
+        var d = new Date();
+        var clock = document.querySelector('.clock');
+        clock.innerHTML = d.getHours() + ":" + d.getMinutes();
+    }
     alertWebSocket.onopen = function () {
     };
     // Log errors
