@@ -46,7 +46,7 @@ class AlertManager {
   displayTime: number;
 
   constructor(alertList: HTMLElement) {
-    this.displayTime = 30 * 1000;
+    this.displayTime = 10 * 1000;
     this.list = alertList;
     this.alertViews = {};
   }

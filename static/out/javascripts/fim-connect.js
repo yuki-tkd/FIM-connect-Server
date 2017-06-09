@@ -17299,7 +17299,7 @@ function init() {
 exports.init = init;
 var AlertManager = (function () {
     function AlertManager(alertList) {
-        this.displayTime = 30 * 1000;
+        this.displayTime = 10 * 1000;
         this.list = alertList;
         this.alertViews = {};
     }
